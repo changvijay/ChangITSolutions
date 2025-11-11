@@ -2,6 +2,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import Head from "next/head";
+import Script from "next/script";
+import NextLink from "next/link";
+import { useCalendlyPopup } from "@/hooks/useCalendlyPopup";
 import {
   Target, Users, Award, Lightbulb, Globe, TrendingUp, Shield, Code,
   ArrowRight, Star, Clock, MapPin, Rocket, Brain, Heart, Zap,
@@ -9,7 +13,11 @@ import {
 } from "lucide-react";
 import Testimonials from "@/components/Testimonials";
 
+const CALENDLY_URL = "https://calendly.com/changvijay54";
+
 const About = () => {
+  const { handleCalendlyLoaded, triggerCalendlyPopup } = useCalendlyPopup(CALENDLY_URL);
+
   const teamExperts = [
     {
       name: "Senior Developers",
@@ -77,10 +85,10 @@ const About = () => {
   ];
 
   const stats = [
-    { number: "10+", label: "Years Experience", icon: Calendar, description: "Decade of innovation" },
-    { number: "500+", label: "Projects Delivered", icon: CheckCircle, description: "Successful launches" },
-    { number: "200+", label: "Happy Clients", icon: Heart, description: "Trusted partnerships" },
-    { number: "25+", label: "Countries Served", icon: MapPin, description: "Global presence" }
+    { number: "99.99%", label: "Uptime Guarantee", icon: Calendar, description: "Decade of innovation" },
+    { number: "100%", label: "Commitment", icon: CheckCircle, description: "Successful launches" },
+    { number: "100%", label: "Reliability", icon: Heart, description: "Trusted partnerships" },
+    { number: "2X", label: "Faster Delivery", icon: MapPin, description: "Lightning Fast Delivery" }
   ];
 
   const values = [
@@ -88,7 +96,7 @@ const About = () => {
       icon: Award,
       title: "Excellence",
       description: "We strive for excellence in every project, delivering quality that exceeds expectations and sets industry standards.",
-      details: "ISO 9001 certified quality processes",
+      details: "Committed to setting new benchmarks in quality and innovation",
       color: "from-yellow-400 to-orange-500",
       metrics: "99.8% quality score"
     },
@@ -147,6 +155,14 @@ const About = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Head>
+        <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
+      </Head>
+      <Script
+        src="https://assets.calendly.com/assets/external/widget.js"
+        strategy="afterInteractive"
+        onLoad={handleCalendlyLoaded}
+      />
       {/* Enhanced Hero Section */}
       <section className="relative py-32 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 overflow-hidden">
         <div className="absolute inset-0 bg-black/50"></div>
@@ -183,19 +199,6 @@ const About = () => {
                   Your trusted partner in digital transformation with over a decade of excellence.
                   We don't just build software – we craft digital experiences that revolutionize businesses.
                 </p>
-              </ScrollReveal>
-
-              <ScrollReveal animation="slide-up" delay={800}>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button size="lg" className="bg-white text-blue-900 hover:bg-blue-50 px-8 py-4 text-lg font-semibold">
-                    Our Journey
-                    <ArrowRight className="ml-2 w-5 h-5" />
-                  </Button>
-                  <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-4 text-lg">
-                    <Play className="mr-2 w-5 h-5" />
-                    Watch Story
-                  </Button>
-                </div>
               </ScrollReveal>
             </div>
 
@@ -240,7 +243,7 @@ const About = () => {
               </div>
             </ScrollReveal>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {/* Enhanced Mission */}
               <ScrollReveal animation="slide-left" delay={400}>
                 <Card className="border-border hover:shadow-2xl transition-all duration-500 group bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20">
@@ -302,7 +305,7 @@ const About = () => {
               </ScrollReveal>
             </div>
 
-            {/* Enhanced Milestones */}
+            {/* Enhanced Milestones
             <ScrollReveal animation="slide-up" delay={200}>
               <div className="text-center mb-12">
                 <Badge variant="outline" className="mb-4 px-4 py-1 text-sm font-semibold">
@@ -311,16 +314,14 @@ const About = () => {
                 <h3 className="text-3xl font-bold text-foreground mb-8">Our Journey Through Time</h3>
               </div>
             </ScrollReveal>
-
+            
             <div className="relative">
-              {/* Timeline line */}
               <div className="hidden lg:block absolute top-20 left-1/2 transform -translate-x-0.5 w-0.5 h-full bg-gradient-to-b from-blue-400 to-purple-400"></div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 relative">
                 {milestones.map((milestone, index) => (
                   <ScrollReveal key={index} animation="slide-up" delay={400 + index * 200}>
                     <div className={`relative ${index % 2 === 0 ? 'lg:text-right lg:pr-16' : 'lg:pl-16'}`}>
-                      {/* Timeline dot */}
                       <div className="hidden lg:block absolute top-8 w-4 h-4 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full transform -translate-y-1/2 shadow-lg"
                         style={{ [index % 2 === 0 ? 'right' : 'left']: '-8px' }}>
                       </div>
@@ -348,6 +349,7 @@ const About = () => {
                 ))}
               </div>
             </div>
+            */}
           </div>
         </div>
       </section>
@@ -378,7 +380,6 @@ const About = () => {
                     <div className={`w-20 h-20 rounded-2xl bg-gradient-to-r ${expert.color} flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg`}>
                       <expert.icon className="w-10 h-10 text-white" />
                     </div>
-                    <div className="text-3xl font-bold text-primary mb-2">{expert.count}</div>
                     <h3 className="text-xl font-semibold mb-4 text-foreground group-hover:text-primary transition-colors">
                       {expert.name}
                     </h3>
@@ -559,11 +560,18 @@ const About = () => {
 
           <ScrollReveal animation="slide-up" delay={600}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-white text-blue-900 hover:bg-blue-50 px-10 py-4 text-lg font-semibold">
-                Start Your Project
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 px-10 py-4 text-lg">
+              <NextLink href="/Contact">
+                <Button size="lg" className="bg-white text-blue-900 hover:bg-blue-50 px-10 py-4 text-lg font-semibold">
+                  Start Your Project
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </NextLink>
+              <Button
+                size="lg"
+                variant="outline"
+                className="bg-white text-blue-900 hover:text-blue-900 hover:bg-blue-50 px-10 py-4 text-lg font-semibold"
+                onClick={triggerCalendlyPopup}
+              >
                 Schedule a Meeting
                 <Calendar className="ml-2 w-5 h-5" />
               </Button>

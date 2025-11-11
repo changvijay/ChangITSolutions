@@ -1,8 +1,17 @@
-import { CheckCircle2, ArrowRight, Users, BarChart3, CreditCard, BookOpen, Utensils, Star, Zap, Shield, Rocket, Globe, TrendingUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Sparkles, CheckCircle2, ArrowRight, Users, BarChart3, CreditCard, BookOpen, Utensils, Star, Zap, Shield, Rocket, Globe, TrendingUp } from "lucide-react";
 import TechStack from "@/components/TechStack";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import Head from "next/head";
+import Script from "next/script";
+import NextLink from "next/link";
+import { useCalendlyPopup } from "@/hooks/useCalendlyPopup";
+
+const CALENDLY_URL = "https://calendly.com/changvijay54";
 
 const Products = () => {
+  const { handleCalendlyLoaded, triggerCalendlyPopup } = useCalendlyPopup(CALENDLY_URL);
+
   const products = [
     {
       id: 1,
@@ -88,6 +97,14 @@ const Products = () => {
 
   return (
     <div className="min-h-screen">
+      <Head>
+        <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
+      </Head>
+      <Script
+        src="https://assets.calendly.com/assets/external/widget.js"
+        strategy="afterInteractive"
+        onLoad={handleCalendlyLoaded}
+      />
       {/* Enhanced Hero Section */}
       <section className="relative min-h-screen pt-20 overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900">
         {/* Animated Background Elements */}
@@ -727,21 +744,30 @@ const Products = () => {
                 with our cutting-edge solutions. Your transformation starts here.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
-                <button className="group relative px-10 py-5 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 rounded-full text-white font-bold text-xl overflow-hidden hover:scale-105 transition-all duration-500 shadow-2xl">
-                  <span className="relative z-10 flex items-center">
-                    Start Your Journey
-                    <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-2 transition-transform duration-300" />
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                </button>
-                
-                <button className="px-10 py-5 border-2 border-white/30 rounded-full text-white font-bold text-xl hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm hover:scale-105">
-                  Schedule Demo
-                </button>
+              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+                <Button
+                  size="lg"
+                  onClick={triggerCalendlyPopup}
+                  className="relative bg-white text-primary hover:bg-white/90 shadow-glow hover:scale-110 transition-all duration-300 group px-10 py-5 text-lg font-bold overflow-hidden"
+                >
+                  <span className="relative z-10">Schedule Free Consultation</span>
+                  <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </Button>
+
+                <NextLink href="/Services">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-2 border-white/30 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm hover:scale-110 transition-all duration-300 px-10 py-5 text-lg font-semibold group"
+                  >
+                    <Sparkles className="mr-3 w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
+                    View Our Portfolio
+                  </Button>
+                </NextLink>
               </div>
 
-              {/* Trust Indicators */}
+              {/* Trust Indicators
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
                 <div className="text-center group">
                   <div className="text-4xl font-bold text-white mb-2 group-hover:scale-110 transition-transform duration-300">50+</div>
@@ -760,6 +786,7 @@ const Products = () => {
                   <div className="text-white/70 group-hover:text-white transition-colors duration-300">Average Rating</div>
                 </div>
               </div>
+               */}
             </div>
           </ScrollReveal>
         </div>

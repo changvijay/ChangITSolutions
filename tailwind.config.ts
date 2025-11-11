@@ -1,9 +1,14 @@
 import type { Config } from "tailwindcss";
 
-export default {
+const config = {
   darkMode: ["class"],
-  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
-  prefix: "",
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx}",
+    "./src/components/**/*.{js,ts,jsx,tsx}",
+    "./src/app/**/*.{js,ts,jsx,tsx}",
+    "./src/hooks/**/*.{js,ts,jsx,tsx}",
+    "./src/lib/**/*.{js,ts,jsx,tsx}"
+  ],
   theme: {
     container: {
       center: true,
@@ -14,7 +19,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ["Inter", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -172,11 +177,13 @@ export default {
         "gradient-subtle": "var(--gradient-subtle)",
       },
       boxShadow: {
-        "primary": "var(--shadow-primary)",
-        "glow": "var(--shadow-glow)",
-        "card": "var(--shadow-card)",
+        primary: "var(--shadow-primary)",
+        glow: "var(--shadow-glow)",
+        card: "var(--shadow-card)",
       }
     },
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
+
+export default config;

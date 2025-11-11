@@ -1,5 +1,8 @@
+"use client";
+
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Code2, ChevronDown, LogOut, User } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -7,17 +10,18 @@ import { useOptionalAuth } from "@/hooks/useOptionalAuth";
 
 const navLinks = [
   { name: "Home", path: "/" },
-  { name: "Services", path: "/services" },
-  { name: "About", path: "/about" },
-  { name: "Products", path: "/products" },
-  { name: "Contact", path: "/contact" },
+  { name: "About", path: "/About" },
+  { name: "Services", path: "/Services" },
+  { name: "Products", path: "/Products" },
+  { name: "Contact", path: "/Contact" },
 ];
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHovering, setIsHovering] = useState<string | null>(null);
-  const location = useLocation();
+  const router = useRouter();
+  const currentPath = router.asPath;
   const { isLoading, isAuthenticated, user, loginWithRedirect, logout, isAvailable } = useOptionalAuth();
 
   useEffect(() => {
@@ -30,7 +34,7 @@ const Navbar = () => {
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
-  }, [location]);
+  }, [currentPath]);
 
   return (
     <nav
@@ -45,7 +49,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Enhanced Logo */}
           <Link 
-            to="/" 
+            href="/" 
             className="flex items-center gap-3 group relative"
             onMouseEnter={() => setIsHovering("logo")}
             onMouseLeave={() => setIsHovering(null)}
@@ -71,10 +75,10 @@ const Navbar = () => {
             {navLinks.map((link) => (
               <div key={link.path} className="relative">
                 <Link
-                  to={link.path}
+                  href={link.path}
                   className={cn(
                     "px-4 py-2 text-sm font-semibold transition-all duration-300 rounded-lg relative group",
-                    location.pathname === link.path
+                    currentPath === link.path
                       ? "text-primary bg-primary/10"
                       : "text-foreground/90 hover:text-primary hover:bg-accent/50"
                   )}
@@ -85,7 +89,7 @@ const Navbar = () => {
                   <span
                     className={cn(
                       "absolute bottom-0 left-1/2 w-0 h-0.5 bg-primary transition-all duration-300 -translate-x-1/2",
-                      location.pathname === link.path 
+                      currentPath === link.path 
                         ? "w-4/5" 
                         : "group-hover:w-4/5"
                     )}
@@ -111,8 +115,8 @@ const Navbar = () => {
                 </div>
                 <Button 
                   variant="ghost"
-                  onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
-                  className="text-foreground/80 hover:text-primary font-medium transition-colors"
+                  onClick={() => logout({ logoutParams: { returnTo: typeof window !== "undefined" ? window.location.origin : undefined } })}
+                  className="text-foreground/80 hover:text-white font-medium transition-colors"
                 >
                   <LogOut className="w-4 h-4 mr-2" />
                   Sign Out
@@ -122,7 +126,7 @@ const Navbar = () => {
               <Button
                 variant="ghost"
                 onClick={() => loginWithRedirect()}
-                className="text-foreground/80 hover:text-primary font-medium transition-colors"
+                className="text-foreground/80 hover:text-white font-medium transition-colors"
               >
                 Sign In
               </Button>
@@ -136,7 +140,7 @@ const Navbar = () => {
                 Sign In
               </Button>
             )}
-            <Link to="/contact">
+            <Link href="/Contact">
               <Button
                 className={cn(
                   "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105",
@@ -179,10 +183,10 @@ const Navbar = () => {
           {navLinks.map((link, index) => (
             <Link
               key={link.path}
-              to={link.path}
+              href={link.path}
               className={cn(
                 "flex items-center px-4 py-3 text-base font-medium rounded-xl transition-all duration-300 transform",
-                location.pathname === link.path
+                currentPath === link.path
                   ? "text-primary bg-primary/10 border-l-4 border-primary shadow-sm"
                   : "text-foreground/90 hover:text-primary hover:bg-accent/50 hover:translate-x-2",
                 isMobileMenuOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
@@ -210,7 +214,7 @@ const Navbar = () => {
                 <Button 
                   variant="outline" 
                   className="w-full font-medium"
-                  onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
+                  onClick={() => logout({ logoutParams: { returnTo: typeof window !== "undefined" ? window.location.origin : undefined } })}
                 >
                   <LogOut className="w-4 h-4 mr-2" />
                   Sign Out
@@ -234,7 +238,7 @@ const Navbar = () => {
                 Sign In
               </Button>
             )}
-            <Link to="/contact" className="block">
+            <Link href="/contact" className="block">
               <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 font-semibold">
                 Get Started
               </Button>

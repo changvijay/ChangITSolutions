@@ -1,14 +1,17 @@
-import { useLocation, Link } from "react-router-dom";
+"use client";
+
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Home, ArrowLeft } from "lucide-react";
+import { Home as HomeIcon, ArrowLeft } from "lucide-react";
 
 const NotFound = () => {
-  const location = useLocation();
+  const router = useRouter();
 
   useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-  }, [location.pathname]);
+    console.error("404 Error: User attempted to access non-existent route:", router.asPath);
+  }, [router.asPath]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-subtle pt-20">
@@ -24,9 +27,9 @@ const NotFound = () => {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Link to="/">
+          <Link href="/">
             <Button size="lg" className="group">
-              <Home className="mr-2 w-5 h-5" />
+              <HomeIcon className="mr-2 w-5 h-5" />
               Go to Homepage
             </Button>
           </Link>

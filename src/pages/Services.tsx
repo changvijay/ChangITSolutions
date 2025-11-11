@@ -2,6 +2,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import NextLink from "next/link";
+import Head from "next/head";
+import Script from "next/script";
+import { useCalendlyPopup } from "@/hooks/useCalendlyPopup";
 import { 
   Database, ShoppingCart, LayoutDashboard, Users, Code, Smartphone,
   Cloud, Lock, Workflow, BarChart3, MessageSquare, Palette,
@@ -21,81 +25,11 @@ const services = [
     caseStudy: "Helped SaaS company increase conversion by 42%"
   },
   {
-    icon: LayoutDashboard,
-    title: "ERP Solutions",
-    description: "Comprehensive enterprise resource planning systems that integrate finance, HR, supply chain, and operations into one unified platform.",
-    features: ["Financial Management", "Inventory Control", "HR Management", "Real-time Reporting"],
-    technologies: ["SAP", "Oracle", "Microsoft Dynamics", "Custom Solutions"],
-    timeline: "12-24 weeks",
-    benefits: ["30% cost reduction", "Real-time data access", "Streamlined operations"],
-    caseStudy: "Manufacturing firm saved $2M annually"
-  },
-  {
-    icon: Code,
-    title: "Web Application Development",
-    description: "Scalable, high-performance web applications built with React, Node.js, and modern frameworks to meet your specific business requirements.",
-    features: ["Custom Features", "Responsive Design", "API Integration", "Cloud Deployment"],
-    technologies: ["React/Next.js", "Node.js", "Python/Django", "AWS/Azure"],
-    timeline: "6-12 weeks",
-    benefits: ["99.9% uptime", "Millisecond response times", "SEO optimized"],
-    caseStudy: "E-commerce platform handling 50k daily users"
-  },
-  {
-    icon: ShoppingCart,
-    title: "E-commerce Platforms",
-    description: "Full-featured online stores with secure payment processing, inventory management, and marketing tools to grow your business.",
-    features: ["Payment Gateway", "Order Management", "Product Catalog", "Analytics Dashboard"],
-    technologies: ["Shopify Plus", "Magento", "WooCommerce", "Headless Commerce"],
-    timeline: "8-16 weeks",
-    benefits: ["3x faster load times", "Mobile-first design", "PCI compliant"],
-    caseStudy: "Retail brand achieved 200% revenue growth"
-  },
-  {
-    icon: Smartphone,
-    title: "Mobile App Development",
-    description: "Native iOS and Android applications that provide seamless experiences across all devices and integrate with your existing systems.",
-    features: ["iOS Development", "Android Development", "Cross-platform", "App Store Deploy"],
-    technologies: ["React Native", "Flutter", "Swift", "Kotlin"],
-    timeline: "10-20 weeks",
-    benefits: ["Native performance", "Offline capability", "Push notifications"],
-    caseStudy: "Fitness app reached 1M+ downloads"
-  },
-  {
-    icon: Cloud,
-    title: "Cloud Solutions",
-    description: "Migrate to the cloud with AWS, Azure, or Google Cloud. We handle architecture, deployment, and ongoing management.",
-    features: ["Cloud Migration", "Infrastructure Setup", "DevOps", "24/7 Monitoring"],
-    technologies: ["AWS", "Azure", "Google Cloud", "Kubernetes"],
-    timeline: "4-12 weeks",
-    benefits: ["50% cost savings", "Auto-scaling", "Disaster recovery"],
-    caseStudy: "Reduced infrastructure costs by 60%"
-  },
-  {
-    icon: Lock,
-    title: "Cybersecurity Services",
-    description: "Protect your digital assets with comprehensive security audits, penetration testing, and implementation of best practices.",
-    features: ["Security Audits", "Penetration Testing", "Compliance", "Data Protection"],
-    technologies: ["SIEM", "Firewalls", "Encryption", "Zero Trust"],
-    timeline: "2-6 weeks",
-    benefits: ["SOC2 compliance", "Real-time threat detection", "Data encryption"],
-    caseStudy: "Prevented $5M potential data breach"
-  },
-  {
-    icon: Workflow,
-    title: "Business Process Automation",
-    description: "Automate repetitive tasks and streamline workflows to increase efficiency and reduce operational costs.",
-    features: ["Workflow Design", "Integration", "RPA Solutions", "Process Optimization"],
-    technologies: ["UiPath", "Automation Anywhere", "Custom Bots", "AI/ML"],
-    timeline: "4-10 weeks",
-    benefits: ["80% time reduction", "Error elimination", "24/7 operation"],
-    caseStudy: "Automated 500+ manual processes"
-  },
-  {
     icon: BarChart3,
-    title: "Data Analytics & BI",
-    description: "Transform raw data into actionable insights with custom dashboards, reports, and predictive analytics.",
+    title: "Business Intelligence & Analytics",
+    description: "Interactive dashboards and predictive analytics that transform raw data into actionable business insights.",
     features: ["Custom Dashboards", "Data Visualization", "Predictive Analytics", "KPI Tracking"],
-    technologies: ["Tableau", "Power BI", "Python", "Machine Learning"],
+    technologies: ["Power BI", "Tableau", "Looker", "Python"],
     timeline: "6-14 weeks",
     benefits: ["Real-time insights", "Predictive modeling", "Data-driven decisions"],
     caseStudy: "Improved decision speed by 70%"
@@ -166,9 +100,21 @@ const processSteps = [
   }
 ];
 
+const CALENDLY_URL = "https://calendly.com/changvijay54";
+
 const Services = () => {
+  const { handleCalendlyLoaded, triggerCalendlyPopup } = useCalendlyPopup(CALENDLY_URL);
+
   return (
     <div className="min-h-screen bg-background">
+      <Head>
+        <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
+      </Head>
+      <Script
+        src="https://assets.calendly.com/assets/external/widget.js"
+        strategy="afterInteractive"
+        onLoad={handleCalendlyLoaded}
+      />
       {/* Enhanced Header */}
       <section className="relative py-28 bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 overflow-hidden">
         <div className="absolute inset-0 bg-black/40"></div>
@@ -201,13 +147,12 @@ const Services = () => {
 
           <ScrollReveal animation="slide-up" delay={800}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-white text-blue-900 hover:bg-blue-50 px-8 py-3 text-lg font-semibold">
-                Start Your Project
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-3 text-lg">
-                View Case Studies
-              </Button>
+              <NextLink href="/Contact">
+                <Button size="lg" className="bg-white text-blue-900 hover:bg-blue-50 px-8 py-3 text-lg font-semibold">
+                  Start Your Project
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </NextLink>
             </div>
           </ScrollReveal>
         </div>
@@ -354,13 +299,7 @@ const Services = () => {
                         <Shield className="w-3 h-3 inline mr-1" />
                         {service.caseStudy}
                       </p>
-                    </div>
-
-                    {/* CTA */}
-                    <Button variant="outline" className="w-full mt-6 group/btn">
-                      Learn More
-                      <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                    </Button>
+                    </div>                    
                   </CardContent>
                 </Card>
               </ScrollReveal>
@@ -386,12 +325,13 @@ const Services = () => {
           
           <ScrollReveal animation="slide-up" delay={600}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-white text-blue-900 hover:bg-blue-50 px-8 py-3 text-lg font-semibold">
+              <Button
+                size="lg"
+                onClick={triggerCalendlyPopup}
+                className="bg-white text-blue-900 hover:bg-blue-50 px-8 py-3 text-lg font-semibold"
+              >
                 Schedule Consultation
                 <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-3 text-lg">
-                Download Brochure
               </Button>
             </div>
           </ScrollReveal>

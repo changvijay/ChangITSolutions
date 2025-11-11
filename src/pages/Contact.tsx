@@ -1,8 +1,13 @@
+import { useState, FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import NextLink from "next/link";
+import Head from "next/head";
+import Script from "next/script";
+import { useCalendlyPopup } from "@/hooks/useCalendlyPopup";
 import { 
   Mail, 
   Phone, 
@@ -25,10 +30,64 @@ import {
 } from "lucide-react";
 
 const Contact = () => {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission
-    console.log("Form submitted");
+  const CALENDLY_URL = "https://calendly.com/changvijay54";
+  const { handleCalendlyLoaded, triggerCalendlyPopup } = useCalendlyPopup(CALENDLY_URL);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formStatus, setFormStatus] = useState<"idle" | "success" | "error">("idle");
+  const [formError, setFormError] = useState<string | null>(null);
+
+  const handleContactSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setFormStatus("idle");
+    setFormError(null);
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    const payload = {
+      firstName: (formData.get("firstName") as string)?.trim() ?? "",
+      lastName: (formData.get("lastName") as string)?.trim() ?? "",
+      email: (formData.get("email") as string)?.trim() ?? "",
+      company: (formData.get("company") as string)?.trim() ?? "",
+      message: (formData.get("message") as string)?.trim() ?? ""
+    };
+
+    if (!payload.firstName || !payload.lastName || !payload.email || !payload.message) {
+      setFormError("Please fill in all required fields.");
+      setFormStatus("error");
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => null);
+        throw new Error(data?.message ?? "Failed to send message. Please try again later.");
+      }
+
+      form.reset();
+      setFormStatus("success");
+    } catch (error) {
+      setFormError(error instanceof Error ? error.message : "Failed to send message. Please try again later.");
+      setFormStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactMethods = [
@@ -38,7 +97,8 @@ const Contact = () => {
       description: "Send us an email anytime",
       details: "We respond within 2 hours",
       contact: "changvijay54@gmail.com",
-      link: "mailto:changvijay54@gmail.com"
+      link: "mailto:changvijay54@gmail.com",
+      type: "link" as const
     },
     {
       icon: Phone,
@@ -46,7 +106,8 @@ const Contact = () => {
       description: "Mon-Fri from 9am to 6pm",
       details: "Quick direct communication",
       contact: "+91 7010747878",
-      link: "tel:+917010747878"
+      link: "tel:+917010747878",
+      type: "link" as const
     },
     {
       icon: MessageCircle,
@@ -54,7 +115,8 @@ const Contact = () => {
       description: "24/7 instant messaging",
       details: "Fast responses via chat",
       contact: "+91 7010747878",
-      link: "https://wa.me/917010747878"
+      link: "https://wa.me/917010747878",
+      type: "link" as const
     },
     {
       icon: Calendar,
@@ -62,7 +124,8 @@ const Contact = () => {
       description: "Schedule a consultation",
       details: "30-min free consultation",
       contact: "Schedule Now",
-      link: "#meeting-scheduler"
+      link: undefined,
+      type: "calendly" as const
     }
   ];
 
@@ -108,6 +171,14 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen pt-20">
+      <Head>
+        <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
+      </Head>
+      <Script
+        src="https://assets.calendly.com/assets/external/widget.js"
+        strategy="afterInteractive"
+        onLoad={handleCalendlyLoaded}
+      />
       {/* Enhanced Hero Section */}
       <section className="relative py-32 bg-gradient-hero overflow-hidden">
         {/* Animated Background Elements */}
@@ -144,12 +215,14 @@ const Contact = () => {
 
           <ScrollReveal animation="slide-up" delay={600}>
             <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
-              <Button size="lg" className="group bg-white text-primary hover:bg-white/90 hover:scale-105 transition-all duration-300 shadow-glow">
-                <MessageCircle className="w-5 h-5 mr-2" />
-                Start Free Consultation
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              <Button size="lg" variant="outline" className="group border-white/30 text-white hover:bg-white/10 hover:scale-105 transition-all duration-300">
+              <NextLink href="/Services">
+                <Button size="lg" className="group bg-white text-primary hover:bg-white/90 hover:scale-105 transition-all duration-300 shadow-glow">
+                  <MessageCircle className="w-5 h-5 mr-2" />
+                  Start Free Consultation
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </NextLink>
+              <Button size="lg" variant="outline" className="group border-white/30 text-primary hover:bg-white/10 hover:scale-105 transition-all duration-300">
                 <Phone className="w-5 h-5 mr-2" />
                 Call Now: +91 7010747878
               </Button>
@@ -231,15 +304,28 @@ const Contact = () => {
                       <div className="bg-primary/5 rounded-lg p-3 mb-6">
                         <p className="text-sm text-primary font-semibold">{method.details}</p>
                       </div>
-                      <a 
-                        href={method.link}
-                        className="group/link inline-flex items-center text-foreground hover:text-primary transition-all duration-300 font-medium"
-                      >
-                        <span className="border-b border-transparent group-hover/link:border-primary transition-all">
-                          {method.contact}
-                        </span>
-                        <ArrowRight className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" />
-                      </a>
+                      {method.type === "calendly" ? (
+                        <button
+                          type="button"
+                          onClick={triggerCalendlyPopup}
+                          className="group/link inline-flex items-center text-foreground hover:text-primary transition-all duration-300 font-medium"
+                        >
+                          <span className="border-b border-transparent group-hover/link:border-primary transition-all">
+                            {method.contact}
+                          </span>
+                          <ArrowRight className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" />
+                        </button>
+                      ) : (
+                        <a 
+                          href={method.link}
+                          className="group/link inline-flex items-center text-foreground hover:text-primary transition-all duration-300 font-medium"
+                        >
+                          <span className="border-b border-transparent group-hover/link:border-primary transition-all">
+                            {method.contact}
+                          </span>
+                          <ArrowRight className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" />
+                        </a>
+                      )}
                     </div>
                   </CardContent>
                 </Card>
@@ -247,7 +333,7 @@ const Contact = () => {
             ))}
           </div>
 
-          {/* Stats Row */}
+          {/* Stats Row
           <ScrollReveal animation="slide-up" delay={600}>
             <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
               {[
@@ -266,6 +352,7 @@ const Contact = () => {
               ))}
             </div>
           </ScrollReveal>
+           */}
         </div>
       </section>
 
@@ -291,151 +378,95 @@ const Contact = () => {
                 </div>
 
                 <Card className="border-border hover:shadow-glow transition-all duration-500 group relative overflow-hidden">
-                  {/* Animated Background */}
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  
+
                   <CardContent className="p-10 relative z-10">
-                    <form onSubmit={handleSubmit} className="space-y-8">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="space-y-2">
-                          <label htmlFor="name" className="block text-sm font-semibold text-foreground">
-                            Full Name *
-                          </label>
-                          <Input 
-                            id="name" 
-                            placeholder="Enter your full name" 
-                            required 
-                            className="h-12 transition-all duration-300 focus:border-primary focus:shadow-primary hover:border-primary/50"
+                    <form className="space-y-6" onSubmit={handleContactSubmit}>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <label htmlFor="firstName" className="block text-sm font-medium mb-2">First Name *</label>
+                          <Input
+                            id="firstName"
+                            name="firstName"
+                            placeholder="John"
+                            autoComplete="given-name"
+                            className="glass bg-white/40 border-white/30 focus:border-primary transition-colors"
+                            required
                           />
                         </div>
-                        <div className="space-y-2">
-                          <label htmlFor="company" className="block text-sm font-semibold text-foreground">
-                            Company Name
-                          </label>
-                          <Input 
-                            id="company" 
-                            placeholder="Your company name" 
-                            className="h-12 transition-all duration-300 focus:border-primary focus:shadow-primary hover:border-primary/50"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="space-y-2">
-                          <label htmlFor="email" className="block text-sm font-semibold text-foreground">
-                            Email Address *
-                          </label>
-                          <Input 
-                            id="email" 
-                            type="email" 
-                            placeholder="your@email.com" 
-                            required 
-                            className="h-12 transition-all duration-300 focus:border-primary focus:shadow-primary hover:border-primary/50"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <label htmlFor="phone" className="block text-sm font-semibold text-foreground">
-                            Phone Number
-                          </label>
-                          <Input 
-                            id="phone" 
-                            type="tel" 
-                            placeholder="+91 1234567890" 
-                            className="h-12 transition-all duration-300 focus:border-primary focus:shadow-primary hover:border-primary/50"
+                        <div>
+                          <label htmlFor="lastName" className="block text-sm font-medium mb-2">Last Name *</label>
+                          <Input
+                            id="lastName"
+                            name="lastName"
+                            placeholder="Doe"
+                            autoComplete="family-name"
+                            className="glass bg-white/40 border-white/30 focus:border-primary transition-colors"
+                            required
                           />
                         </div>
                       </div>
 
-                      <div className="space-y-2">
-                        <label htmlFor="service" className="block text-sm font-semibold text-foreground">
-                          Service Interested In
-                        </label>
-                        <select 
-                          id="service"
-                          className="w-full h-12 px-4 py-3 border border-border rounded-lg focus:outline-none focus:border-primary focus:shadow-primary hover:border-primary/50 transition-all duration-300 bg-background"
-                        >
-                          <option value="">Select a service</option>
-                          <option value="web-development">🌐 Web Development</option>
-                          <option value="mobile-apps">📱 Mobile Applications</option>
-                          <option value="cloud-solutions">☁️ Cloud Solutions</option>
-                          <option value="digital-transformation">🚀 Digital Transformation</option>
-                          <option value="consulting">💼 IT Consulting</option>
-                          <option value="other">🛠️ Other Services</option>
-                        </select>
-                      </div>
-
-                      <div className="space-y-2">
-                        <label htmlFor="budget" className="block text-sm font-semibold text-foreground">
-                          Project Budget (USD)
-                        </label>
-                        <select 
-                          id="budget"
-                          className="w-full h-12 px-4 py-3 border border-border rounded-lg focus:outline-none focus:border-primary focus:shadow-primary hover:border-primary/50 transition-all duration-300 bg-background"
-                        >
-                          <option value="">Select budget range</option>
-                          <option value="5k-10k">💰 $5,000 - $10,000</option>
-                          <option value="10k-25k">💎 $10,000 - $25,000</option>
-                          <option value="25k-50k">🏆 $25,000 - $50,000</option>
-                          <option value="50k-100k">👑 $50,000 - $100,000</option>
-                          <option value="100k+">⭐ $100,000+</option>
-                        </select>
-                      </div>
-
-                      <div className="space-y-2">
-                        <label htmlFor="message" className="block text-sm font-semibold text-foreground">
-                          Project Details *
-                        </label>
-                        <Textarea 
-                          id="message" 
-                          placeholder="Tell us about your project requirements, goals, timeline, and any specific features you need..." 
-                          rows={6}
-                          required 
-                          className="transition-all duration-300 focus:border-primary focus:shadow-primary hover:border-primary/50 resize-none"
+                      <div>
+                        <label htmlFor="email" className="block text-sm font-medium mb-2">Email *</label>
+                        <Input
+                          id="email"
+                          name="email"
+                          type="email"
+                          placeholder="john@company.com"
+                          autoComplete="email"
+                          className="glass bg-white/40 border-white/30 focus:border-primary transition-colors"
+                          required
                         />
                       </div>
 
-                      <div className="bg-muted/50 rounded-lg p-4">
-                        <div className="flex items-start space-x-3">
-                          <input 
-                            type="checkbox" 
-                            id="nda"
-                            className="w-5 h-5 text-primary border-border rounded focus:ring-primary mt-0.5"
-                          />
-                          <div>
-                            <label htmlFor="nda" className="block text-sm font-medium text-foreground cursor-pointer">
-                              I require an NDA before sharing project details
-                            </label>
-                            <p className="text-xs text-muted-foreground mt-1">
-                              We'll send you a signed NDA before our initial consultation call.
-                            </p>
-                          </div>
-                        </div>
+                      <div>
+                        <label htmlFor="company" className="block text-sm font-medium mb-2">Company</label>
+                        <Input
+                          id="company"
+                          name="company"
+                          placeholder="Your Company Name"
+                          autoComplete="organization"
+                          className="glass bg-white/40 border-white/30 focus:border-primary transition-colors"
+                        />
                       </div>
 
-                      <Button type="submit" className="w-full group h-14 text-lg font-semibold hover:scale-105 transition-all duration-300 shadow-glow" size="lg">
-                        <Send className="mr-3 w-5 h-5" />
-                        Send Project Inquiry
-                        <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                      <div>
+                        <label htmlFor="message" className="block text-sm font-medium mb-2">Message *</label>
+                        <Textarea
+                          id="message"
+                          name="message"
+                          placeholder="Tell us about your project..."
+                          rows={4}
+                          className="glass bg-white/40 border-white/30 focus:border-primary transition-colors resize-none"
+                          required
+                        />
+                      </div>
+
+                      <Button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full glass bg-primary/90 hover:bg-primary text-primary-foreground py-6 text-lg font-medium rounded-2xl backdrop-blur-md border border-white/20 transition-spring group hover:scale-105 disabled:opacity-70 disabled:pointer-events-none"
+                      >
+                        {isSubmitting ? "Sending..." : "Start Your Digital Journey"}
+                        <Send className="ml-2 h-5 w-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                       </Button>
 
-                      <div className="text-center">
-                        <p className="text-sm text-muted-foreground">
-                          By submitting this form, you agree to our 
-                          <a href="#" className="text-primary hover:underline mx-1">privacy policy</a>
-                          and 
-                          <a href="#" className="text-primary hover:underline mx-1">terms of service</a>.
+                      {formStatus === "success" && (
+                        <p className="text-sm text-green-500 text-center" role="status" aria-live="polite">
+                          Thanks! We received your message and will reply shortly.
                         </p>
-                        <div className="flex items-center justify-center mt-3 space-x-4 text-xs text-muted-foreground">
-                          <div className="flex items-center">
-                            <Shield className="w-3 h-3 mr-1" />
-                            <span>SSL Secured</span>
-                          </div>
-                          <div className="flex items-center">
-                            <CheckCircle2 className="w-3 h-3 mr-1" />
-                            <span>GDPR Compliant</span>
-                          </div>
-                        </div>
-                      </div>
+                      )}
+
+                      {formStatus === "error" && (
+                        <p className="text-sm text-red-500 text-center" role="alert" aria-live="assertive">
+                          {formError ?? "Something went wrong. Please try again."}
+                        </p>
+                      )}
+
+                      <p className="text-xs text-muted-foreground text-center">
+                        By submitting this form, you agree to our Privacy Policy and Terms of Service
+                      </p>
                     </form>
                   </CardContent>
                 </Card>
@@ -633,17 +664,6 @@ const Contact = () => {
                 </div>
               </div>
             </ScrollReveal>
-
-            {/* CTA Button */}
-            <ScrollReveal animation="slide-up" delay={1000}>
-              <div className="text-center mt-16">
-                <Button size="lg" className="group hover:scale-105 transition-all duration-300 shadow-glow h-14 px-8">
-                  <Users className="w-5 h-5 mr-3" />
-                  <span className="text-lg font-semibold">Meet Our Expert Team</span>
-                  <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </div>
-            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -687,11 +707,16 @@ const Contact = () => {
                   <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
                 
-                <Button size="lg" variant="outline" className="group border-white/30 text-white hover:bg-white/10 hover:scale-105 transition-all duration-300 h-16 px-8">
-                  <Mail className="w-6 h-6 mr-3" />
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="group border-white/30 text-primary hover:bg-white/10 hover:scale-105 transition-all duration-300 h-16 px-8"
+                  onClick={triggerCalendlyPopup}
+                >
+                  <Calendar className="w-6 h-6 mr-3" />
                   <div className="text-left">
-                    <div className="text-lg font-bold">Email Us</div>
-                    <div className="text-sm opacity-80">Quick Response</div>
+                    <div className="text-lg font-bold">Schedule a Meeting</div>
+                    <div className="text-sm opacity-80">Pick a time that works</div>
                   </div>
                 </Button>
               </div>

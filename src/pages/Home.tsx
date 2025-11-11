@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Zap, Shield, TrendingUp, Star, Users, Award, CheckCircle, Globe, Rocket } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
+import Head from "next/head";
+import Script from "next/script";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, FormEvent } from 'react';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { GlassCard } from '@/components/GlassCard';
 import { Target } from 'lucide-react';
@@ -28,6 +30,15 @@ import {
   Palette,
   BarChart3
 } from 'lucide-react';
+
+declare global {
+  interface Window {
+    Calendly?: {
+      initPopupWidget: (options: { url: string }) => void;
+      closePopup?: () => void;
+    };
+  }
+}
 
 const services = [
   {
@@ -121,8 +132,8 @@ const industries = [
 
 const stats = [
   { icon: Target, value: '99.9%', label: 'Uptime Guarantee' },
-  { icon: Users, value: '150+', label: 'Expert Team' },
-  { icon: Award, value: '5+', label: 'Years Experience' },
+  { icon: Users, value: '100%', label: 'Commitment' },
+  { icon: Award, value: '100%', label: 'Reliability' },
   { icon: Zap, value: '2x', label: 'Faster Delivery' }
 ];
 
@@ -173,7 +184,13 @@ const Home = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [isCalendlyReady, setIsCalendlyReady] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formStatus, setFormStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [formError, setFormError] = useState<string | null>(null);
   const heroRef = useRef(null);
+  const calendlyIntervalRef = useRef<number | null>(null);
+  const calendlyUrl = "https://calendly.com/changvijay54";
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -196,13 +213,132 @@ const Home = () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('scroll', handleScroll);
       clearInterval(testimonialInterval);
+      if (calendlyIntervalRef.current !== null) {
+        window.clearInterval(calendlyIntervalRef.current);
+        calendlyIntervalRef.current = null;
+      }
     };
   }, []);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.Calendly?.initPopupWidget) {
+      setIsCalendlyReady(true);
+    }
+  }, []);
+
   const parallaxOffset = scrollY * 0.5;
+  const openCalendlyPopup = () => {
+    if (typeof window === "undefined" || !window.Calendly?.initPopupWidget) {
+      return false;
+    }
+
+    window.Calendly.initPopupWidget({ url: calendlyUrl });
+    return true;
+  };
+
+  const handleScheduleConsultation = () => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    if (openCalendlyPopup()) {
+      setIsCalendlyReady(true);
+      return;
+    }
+
+    if (!isCalendlyReady) {
+      console.info("Calendly widget is loading; the popup will appear once it's ready.");
+    }
+
+    if (calendlyIntervalRef.current !== null) {
+      window.clearInterval(calendlyIntervalRef.current);
+      calendlyIntervalRef.current = null;
+    }
+
+    let attempts = 0;
+    const maxAttempts = 10;
+    calendlyIntervalRef.current = window.setInterval(() => {
+      attempts += 1;
+      if (openCalendlyPopup()) {
+        setIsCalendlyReady(true);
+        if (calendlyIntervalRef.current !== null) {
+          window.clearInterval(calendlyIntervalRef.current);
+          calendlyIntervalRef.current = null;
+        }
+      } else if (attempts >= maxAttempts) {
+        if (calendlyIntervalRef.current !== null) {
+          window.clearInterval(calendlyIntervalRef.current);
+          calendlyIntervalRef.current = null;
+        }
+        console.warn("Calendly widget is still loading. Please try again in a moment.");
+      }
+    }, 150);
+  };
+
+  const handleContactSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setFormStatus('idle');
+    setFormError(null);
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    const payload = {
+      firstName: (formData.get('firstName') as string)?.trim() ?? '',
+      lastName: (formData.get('lastName') as string)?.trim() ?? '',
+      email: (formData.get('email') as string)?.trim() ?? '',
+      company: (formData.get('company') as string)?.trim() ?? '',
+      message: (formData.get('message') as string)?.trim() ?? ''
+    };
+
+    if (!payload.firstName || !payload.lastName || !payload.email || !payload.message) {
+      setFormError('Please fill in all required fields.');
+      setFormStatus('error');
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => null);
+        throw new Error(data?.message ?? 'Failed to send message. Please try again later.');
+      }
+
+      setFormError(null);
+      setFormStatus('success');
+      form.reset();
+    } catch (error) {
+      setFormError(error instanceof Error ? error.message : 'Failed to send message. Please try again later.');
+      setFormStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="min-h-screen">
+      <Head>
+        <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
+      </Head>
+      <Script
+        src="https://assets.calendly.com/assets/external/widget.js"
+        strategy="afterInteractive"
+        onLoad={() => setIsCalendlyReady(true)}
+      />
       {/* Enhanced Hero Section with Parallax */}
       <section
         ref={heroRef}
@@ -254,7 +390,7 @@ const Home = () => {
                 <Sparkles className="w-4 h-4 text-white animate-pulse" />
                 <Star className="w-4 h-4 text-yellow-300 animate-pulse" style={{ animationDelay: '0.5s' }} />
               </div>
-              <span className="text-sm font-medium text-white">Trusted by 100+ businesses worldwide</span>
+              <span className="text-sm font-medium text-white">Trusted by businesses world</span>
               <Badge variant="secondary" className="bg-white/20 text-white border-0 text-xs">
                 5.0 ★
               </Badge>
@@ -287,7 +423,7 @@ const Home = () => {
 
             {/* Enhanced CTA Buttons with improved interactions */}
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-              <Link to="/contact">
+              <Link href="/Contact">
                 <Button
                   size="lg"
                   className="relative bg-white text-primary hover:bg-white/90 shadow-glow hover:scale-110 transition-all duration-300 group px-8 py-4 text-lg font-semibold overflow-hidden"
@@ -300,7 +436,7 @@ const Home = () => {
                   <div className="absolute inset-0 bg-white/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
                 </Button>
               </Link>
-              <Link to="/services">
+              <Link href="/Services">
                 <Button
                   size="lg"
                   variant="outline"
@@ -313,7 +449,7 @@ const Home = () => {
               </Link>
             </div>
 
-            {/* Enhanced Stats with hover effects */}
+            {/* Enhanced Stats with hover effects 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto animate-fade-in" style={{ animationDelay: '0.3s' }}>
               {[
                 { number: "100+", label: "Projects Delivered", icon: Rocket, color: "text-blue-300", gradient: "from-blue-400 to-cyan-400" },
@@ -338,9 +474,9 @@ const Home = () => {
                   </div>
                 </div>
               ))}
-            </div>
+            </div>*/}
 
-            {/* Enhanced Trust Indicators */}
+            {/* Enhanced Trust Indicators 
             <div className="flex flex-wrap justify-center items-center gap-6 mt-12 opacity-70 animate-fade-in" style={{ animationDelay: '0.4s' }}>
               {[
                 { text: "ISO 27001 Certified", icon: Shield },
@@ -353,6 +489,7 @@ const Home = () => {
                 </div>
               ))}
             </div>
+            */}
           </div>
         </div>
       </section>
@@ -378,7 +515,7 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
             {[
               {
                 icon: Zap,
@@ -413,7 +550,7 @@ const Home = () => {
             ].map((item, index) => (
               <Card
                 key={index}
-                className="group relative overflow-hidden border-0 shadow-card hover:shadow-glow transition-all duration-500 hover:scale-105 animate-scale-in bg-card/50 backdrop-blur-sm"
+                className="bg-white shadow-4xl group relative overflow-hidden border-0 shadow-card hover:shadow-glow transition-all duration-500 hover:scale-10 animate-scale-in"
                 style={{ animationDelay: `${index * 0.15}s` }}
               >
                 <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-all duration-500 bg-gradient-to-br ${item.color}`} />
@@ -466,7 +603,7 @@ const Home = () => {
             ))}
           </div>
 
-          {/* Enhanced trust elements */}
+          {/* Enhanced trust elements 
           <div className="text-center animate-fade-in" style={{ animationDelay: '0.6s' }}>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
               {[
@@ -489,6 +626,7 @@ const Home = () => {
               ))}
             </div>
           </div>
+          */}
         </div>
       </section>
 
@@ -637,7 +775,7 @@ const Home = () => {
             className="text-center mt-12 sm:mt-16 animate-fade-up"
             style={{ animationDelay: "0.8s" }}
           >
-            <Link to="/process">
+            <Link href="/Process">
               <Button
                 variant="outline"
                 size="lg"
@@ -753,7 +891,7 @@ const Home = () => {
                   ))}
                 </div>
 
-                <Link to="/about">
+                <Link href="/About">
                   <Button className="group">
                     Learn More About Us
                     <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -1034,9 +1172,9 @@ const Home = () => {
 
                 <div className="space-y-6 mb-8">
                   {[
-                    { icon: Mail, label: "Email", value: "hello@changgroup.com", gradient: "from-blue-500 to-cyan-500" },
-                    { icon: Phone, label: "Phone", value: "+1 (555) 123-4567", gradient: "from-green-500 to-emerald-500" },
-                    { icon: MapPin, label: "Office", value: "123 Innovation Drive, Tech City", gradient: "from-purple-500 to-pink-500" }
+                    { icon: Mail, label: "Email", value: "changvijay54@gmail.com", gradient: "from-blue-500 to-cyan-500" },
+                    { icon: Phone, label: "Phone", value: "+91 7010747878", gradient: "from-green-500 to-emerald-500" },
+                    { icon: MapPin, label: "Office", value: "109, Pillayar Kovil St. · Kalathur · Ranipet · TN 632531", gradient: "from-purple-500 to-pink-500" }
                   ].map((item, idx) => (
                     <div key={idx} className="flex items-center group hover:translate-x-2 transition-transform duration-300">
                       <div className={`w-12 h-12 bg-gradient-to-br ${item.gradient} rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg`}>
@@ -1058,9 +1196,18 @@ const Home = () => {
                   <p className="text-muted-foreground font-light mb-4">
                     Our team is available around the clock to answer your questions and provide support.
                   </p>
-                  <Button className="w-full glass bg-primary/90 hover:bg-primary group">
-                    Start Live Chat
-                    <MessageCircle className="ml-2 w-4 h-4 group-hover:scale-110 transition-transform" />
+                  <Button
+                    asChild
+                    className="w-full glass bg-primary/90 hover:bg-primary group"
+                  >
+                    <Link
+                      href="https://wa.me/917010747878"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Start Live Chat
+                      <MessageCircle className="ml-2 w-4 h-4 group-hover:scale-110 transition-transform" />
+                    </Link>
                   </Button>
                 </GlassCard>
               </div>
@@ -1068,20 +1215,26 @@ const Home = () => {
 
             <ScrollReveal animation="slide-left">
               <GlassCard className="hover:shadow-glow transition-all duration-500">
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={handleContactSubmit}>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium mb-2">First Name *</label>
+                      <label htmlFor="firstName" className="block text-sm font-medium mb-2">First Name *</label>
                       <Input
+                        id="firstName"
+                        name="firstName"
                         placeholder="John"
+                        autoComplete="given-name"
                         className="glass bg-white/40 border-white/30 focus:border-primary transition-colors"
                         required
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">Last Name *</label>
+                      <label htmlFor="lastName" className="block text-sm font-medium mb-2">Last Name *</label>
                       <Input
+                        id="lastName"
+                        name="lastName"
                         placeholder="Doe"
+                        autoComplete="family-name"
                         className="glass bg-white/40 border-white/30 focus:border-primary transition-colors"
                         required
                       />
@@ -1089,26 +1242,34 @@ const Home = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium mb-2">Email *</label>
+                    <label htmlFor="email" className="block text-sm font-medium mb-2">Email *</label>
                     <Input
+                      id="email"
+                      name="email"
                       type="email"
                       placeholder="john@company.com"
+                      autoComplete="email"
                       className="glass bg-white/40 border-white/30 focus:border-primary transition-colors"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium mb-2">Company</label>
+                    <label htmlFor="company" className="block text-sm font-medium mb-2">Company</label>
                     <Input
+                      id="company"
+                      name="company"
                       placeholder="Your Company Name"
+                      autoComplete="organization"
                       className="glass bg-white/40 border-white/30 focus:border-primary transition-colors"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium mb-2">Message *</label>
+                    <label htmlFor="message" className="block text-sm font-medium mb-2">Message *</label>
                     <Textarea
+                      id="message"
+                      name="message"
                       placeholder="Tell us about your project..."
                       rows={4}
                       className="glass bg-white/40 border-white/30 focus:border-primary transition-colors resize-none"
@@ -1118,11 +1279,24 @@ const Home = () => {
 
                   <Button
                     type="submit"
-                    className="w-full glass bg-primary/90 hover:bg-primary text-primary-foreground py-6 text-lg font-medium rounded-2xl backdrop-blur-md border border-white/20 transition-spring group hover:scale-105"
+                    disabled={isSubmitting}
+                    className="w-full glass bg-primary/90 hover:bg-primary text-primary-foreground py-6 text-lg font-medium rounded-2xl backdrop-blur-md border border-white/20 transition-spring group hover:scale-105 disabled:opacity-70 disabled:pointer-events-none"
                   >
-                    Start Your Digital Journey
+                    {isSubmitting ? 'Sending...' : 'Start Your Digital Journey'}
                     <Send className="ml-2 h-5 w-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                   </Button>
+
+                  {formStatus === 'success' && (
+                    <p className="text-sm text-green-500 text-center" role="status" aria-live="polite">
+                      Thanks! We received your message and will reply shortly.
+                    </p>
+                  )}
+
+                  {formStatus === 'error' && (
+                    <p className="text-sm text-red-500 text-center" role="alert" aria-live="assertive">
+                      {formError ?? 'Something went wrong. Please try again.'}
+                    </p>
+                  )}
 
                   <p className="text-xs text-muted-foreground text-center">
                     By submitting this form, you agree to our Privacy Policy and Terms of Service
@@ -1170,18 +1344,17 @@ const Home = () => {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-                <Link to="/contact">
-                  <Button
-                    size="lg"
-                    className="relative bg-white text-primary hover:bg-white/90 shadow-glow hover:scale-110 transition-all duration-300 group px-10 py-5 text-lg font-bold overflow-hidden"
-                  >
-                    <span className="relative z-10">Schedule Free Consultation</span>
-                    <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </Button>
-                </Link>
+                <Button
+                  size="lg"
+                  onClick={handleScheduleConsultation}
+                  className="relative bg-white text-primary hover:bg-white/90 shadow-glow hover:scale-110 transition-all duration-300 group px-10 py-5 text-lg font-bold overflow-hidden"
+                >
+                  <span className="relative z-10">Schedule Free Consultation</span>
+                  <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </Button>
 
-                <Link to="/services">
+                <Link href="/Services">
                   <Button
                     size="lg"
                     variant="outline"
