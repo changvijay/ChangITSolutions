@@ -31,7 +31,7 @@ const Testimonials = () => {
             Client Success Stories
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Don't just take our word for it - hear from our satisfied clients
+            Don&apos;t just take our word for it - hear from our satisfied clients
           </p>
         </div>
 
@@ -49,7 +49,7 @@ const Testimonials = () => {
                   ))}
                 </div>
                 <p className="text-muted-foreground mb-6 leading-relaxed">
-                  "{testimonial.content}"
+                  &quot;{testimonial.content}&quot;
                 </p>
                 <div>
                   <div className="font-semibold text-foreground">

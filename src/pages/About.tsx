@@ -7,9 +7,9 @@ import Script from "next/script";
 import NextLink from "next/link";
 import { useCalendlyPopup } from "@/hooks/useCalendlyPopup";
 import {
-  Target, Users, Award, Lightbulb, Globe, TrendingUp, Shield, Code,
-  ArrowRight, Star, Clock, MapPin, Rocket, Brain, Heart, Zap,
-  CheckCircle, Trophy, Building, Briefcase, Calendar, Play
+  Target, Users, Award, Lightbulb, Globe, Shield, Code,
+  ArrowRight, Star, MapPin, Brain, Heart, Zap,
+  CheckCircle, Building, Calendar
 } from "lucide-react";
 import Testimonials from "@/components/Testimonials";
 
@@ -53,36 +53,36 @@ const About = () => {
     }
   ];
 
-  const milestones = [
-    {
-      year: "2014",
-      event: "Company Founded",
-      description: "Started with 5 passionate team members and a vision",
-      icon: Rocket,
-      achievements: "First office in Mumbai"
-    },
-    {
-      year: "2017",
-      event: "100+ Projects",
-      description: "Reached milestone of 100 successful deliveries",
-      icon: Trophy,
-      achievements: "₹50M+ in revenue"
-    },
-    {
-      year: "2020",
-      event: "Global Expansion",
-      description: "Opened offices in 3 countries during pandemic",
-      icon: Globe,
-      achievements: "500+ team members"
-    },
-    {
-      year: "2024",
-      event: "Industry Leaders",
-      description: "Recognized as top IT service provider in Asia",
-      icon: Award,
-      achievements: "1000+ projects completed"
-    }
-  ];
+  // const milestones = [
+  //   {
+  //     year: "2014",
+  //     event: "Company Founded",
+  //     description: "Started with 5 passionate team members and a vision",
+  //     icon: Rocket,
+  //     achievements: "First office in Mumbai"
+  //   },
+  //   {
+  //     year: "2017",
+  //     event: "100+ Projects",
+  //     description: "Reached milestone of 100 successful deliveries",
+  //     icon: Trophy,
+  //     achievements: "₹50M+ in revenue"
+  //   },
+  //   {
+  //     year: "2020",
+  //     event: "Global Expansion",
+  //     description: "Opened offices in 3 countries during pandemic",
+  //     icon: Globe,
+  //     achievements: "500+ team members"
+  //   },
+  //   {
+  //     year: "2024",
+  //     event: "Industry Leaders",
+  //     description: "Recognized as top IT service provider in Asia",
+  //     icon: Award,
+  //     achievements: "1000+ projects completed"
+  //   }
+  // ];
 
   const stats = [
     { number: "99.99%", label: "Uptime Guarantee", icon: Calendar, description: "Decade of innovation" },
@@ -197,7 +197,7 @@ const About = () => {
               <ScrollReveal animation="slide-up" delay={600}>
                 <p className="text-xl text-white/90 mb-8 leading-relaxed">
                   Your trusted partner in digital transformation with over a decade of excellence.
-                  We don't just build software – we craft digital experiences that revolutionize businesses.
+                  We don&apos;t just build software – we craft digital experiences that revolutionize businesses.
                 </p>
               </ScrollReveal>
             </div>
@@ -285,7 +285,7 @@ const About = () => {
                       <h3 className="text-3xl font-bold text-foreground">Our Vision</h3>
                     </div>
                     <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-                      To be the world's most trusted technology partner, recognized for our innovation,
+                      To be the world&apos;s most trusted technology partner, recognized for our innovation,
                       excellence, and transformative impact on businesses across industries.
                     </p>
                     <div className="space-y-4">
@@ -496,7 +496,7 @@ const About = () => {
                 Our Technology Arsenal
               </h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Mastering cutting-edge technologies that power tomorrow's businesses. We stay ahead of the curve to deliver future-ready solutions.
+                Mastering cutting-edge technologies that power tomorrow&apos;s businesses. We stay ahead of the curve to deliver future-ready solutions.
               </p>
             </div>
           </ScrollReveal>
@@ -554,7 +554,7 @@ const About = () => {
           <ScrollReveal animation="slide-up" delay={400}>
             <p className="text-xl text-white/90 max-w-3xl mx-auto mb-10">
               Join 500+ companies who trust Chang Groups to deliver exceptional digital solutions.
-              Let's build something extraordinary together.
+              Let&apos;s build something extraordinary together.
             </p>
           </ScrollReveal>
 

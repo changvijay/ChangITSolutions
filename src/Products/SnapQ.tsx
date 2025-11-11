@@ -167,7 +167,7 @@ const Testimonials = () => {
                 
                 {/* Content */}
                 <p className="text-foreground mb-6 leading-relaxed text-base">
-                  "{testimonial.content}"
+                  &quot;{testimonial.content}&quot;
                 </p>
                 
                 {/* Author */}
@@ -224,7 +224,7 @@ const CTA = () => {
             {/* Heading */}
             <div className="space-y-4">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white">
-                Ready to Transform Your School's Analytics?
+                Ready to Transform Your School&apos;s Analytics?
               </h2>
               <p className="text-xl text-white/80 max-w-2xl mx-auto">
                 Join 500+ schools already using SnapQ to drive better student outcomes through data-driven insights.

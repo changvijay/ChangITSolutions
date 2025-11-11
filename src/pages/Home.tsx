@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles, Zap, Shield, TrendingUp, Star, Users, Award, CheckCircle, Globe, Rocket } from "lucide-react";
+import { ArrowRight, Sparkles, Zap, Shield, TrendingUp, Star, Users, Award, CheckCircle, Globe } from "lucide-react";
 import Link from "next/link";
 import Head from "next/head";
 import Script from "next/script";
@@ -193,7 +193,7 @@ const Home = () => {
   const calendlyUrl = "https://calendly.com/changvijay54";
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
@@ -832,7 +832,7 @@ const Home = () => {
                     </div>
 
                     <div className="space-y-2 mb-6">
-                      {service.features.map((feature, idx) => (
+                      {service.features.map((feature) => (
                         <div key={feature} className="flex items-center text-sm text-muted-foreground group-hover:text-foreground transition-colors">
                           <div className={`w-1.5 h-1.5 bg-gradient-to-r ${service.gradient} rounded-full mr-2`} />
                           {feature}
@@ -871,7 +871,7 @@ const Home = () => {
                 </p>
                 <p className="text-lg text-muted-foreground mb-8 font-light leading-relaxed">
                   From custom CRM systems to AI-powered analytics, we craft solutions that not only
-                  meet today's needs but anticipate tomorrow's challenges. Our team of experts combines
+                  meet today&apos;s needs but anticipate tomorrow&apos;s challenges. Our team of experts combines
                   technical excellence with creative problem-solving to deliver exceptional results.
                 </p>
 
@@ -996,7 +996,7 @@ const Home = () => {
                 Loved by <span className="text-gradient">Our Clients</span>
               </h2>
               <p className="text-base sm:text-xl text-muted-foreground max-w-xl sm:max-w-2xl mx-auto font-light px-2">
-                Don't just take our word for it — hear from businesses we've helped transform.
+                Don&apos;t just take our word for it — hear from businesses we&apos;ve helped transform.
               </p>
             </div>
           </ScrollReveal>
@@ -1017,7 +1017,7 @@ const Home = () => {
                 </div>
 
                 <p className="text-base sm:text-xl md:text-2xl text-foreground font-light leading-relaxed mb-6 sm:mb-8 italic text-center sm:text-left">
-                  "{testimonials[currentTestimonial].content}"
+                  &quot;{testimonials[currentTestimonial].content}&quot;
                 </p>
 
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 sm:gap-0">
@@ -1074,7 +1074,7 @@ const Home = () => {
                       ))}
                     </div>
                     <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed line-clamp-5">
-                      "{testimonial.content}"
+                      &quot;{testimonial.content}&quot;
                     </p>
                   </div>
 
@@ -1157,7 +1157,7 @@ const Home = () => {
                 Get In Touch
               </Badge>
               <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
-                Let's Build Something <span className="text-gradient">Beautiful Together</span>
+                Let&apos;s Build Something <span className="text-gradient">Beautiful Together</span>
               </h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-light">
                 Ready to transform your business? Get in touch with our experts today
@@ -1329,7 +1329,7 @@ const Home = () => {
               </Badge>
 
               <h2 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-8 animate-fade-up leading-tight">
-                Let's Build Something{" "}
+                Let&apos;s Build Something{" "}
                 <span className="relative inline-block">
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white/90 to-white/80 animate-pulse">
                     Amazing

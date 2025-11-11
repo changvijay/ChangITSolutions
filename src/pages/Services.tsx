@@ -7,10 +7,10 @@ import Head from "next/head";
 import Script from "next/script";
 import { useCalendlyPopup } from "@/hooks/useCalendlyPopup";
 import { 
-  Database, ShoppingCart, LayoutDashboard, Users, Code, Smartphone,
-  Cloud, Lock, Workflow, BarChart3, MessageSquare, Palette,
+  Database, Users, Code, MessageSquare,
+  BarChart3, Palette,
   ArrowRight, CheckCircle, Clock, Target, Zap, Shield,
-  Globe, Server, Cpu, Brain, Rocket, BarChart
+  Server, Rocket, BarChart
 } from "lucide-react";
 
 const services = [
@@ -189,7 +189,7 @@ const Services = () => {
                 How We Deliver Excellence
               </h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                A proven process that ensures your project's success from start to finish
+                A proven process that ensures your project&apos;s success from start to finish
               </p>
             </div>
           </ScrollReveal>
@@ -319,7 +319,7 @@ const Services = () => {
           
           <ScrollReveal animation="slide-up" delay={400}>
             <p className="text-xl text-white/90 max-w-2xl mx-auto mb-8">
-              Let's discuss how our services can drive your digital transformation and deliver measurable results.
+              Let&apos;s discuss how our services can drive your digital transformation and deliver measurable results.
             </p>
           </ScrollReveal>
           

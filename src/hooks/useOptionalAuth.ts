@@ -35,7 +35,7 @@ export const useOptionalAuth = () => {
       ...auth0,
       isAvailable: isProviderAvailable,
     };
-  } catch (error) {
+  } catch {
     // Auth0 provider not available, return default values
     return {
       isLoading: false,

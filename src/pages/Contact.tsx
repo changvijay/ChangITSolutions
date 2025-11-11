@@ -11,15 +11,12 @@ import { useCalendlyPopup } from "@/hooks/useCalendlyPopup";
 import { 
   Mail, 
   Phone, 
-  MapPin, 
   Send, 
   Clock, 
   Globe,
   MessageCircle,
   Calendar,
   CheckCircle2,
-  Users,
-  Building,
   ArrowRight,
   Star,
   Shield,
@@ -129,22 +126,22 @@ const Contact = () => {
     }
   ];
 
-  const officeLocations = [
-    {
-      city: "Head Office",
-      address: "123 Tech Park, Innovation Road",
-      area: "Silicon Valley, CA 94025",
-      phone: "+1 (555) 123-4567",
-      hours: "Mon-Fri: 9:00 AM - 6:00 PM"
-    },
-    {
-      city: "Development Center",
-      address: "456 IT Hub, Digital Street",
-      area: "Bangalore, KA 560001",
-      phone: "+91 80 1234 5678",
-      hours: "Mon-Sat: 9:00 AM - 7:00 PM"
-    }
-  ];
+  // const officeLocations = [
+  //   {
+  //     city: "Head Office",
+  //     address: "123 Tech Park, Innovation Road",
+  //     area: "Silicon Valley, CA 94025",
+  //     phone: "+1 (555) 123-4567",
+  //     hours: "Mon-Fri: 9:00 AM - 6:00 PM"
+  //   },
+  //   {
+  //     city: "Development Center",
+  //     address: "456 IT Hub, Digital Street",
+  //     area: "Bangalore, KA 560001",
+  //     phone: "+91 80 1234 5678",
+  //     hours: "Mon-Sat: 9:00 AM - 7:00 PM"
+  //   }
+  // ];
 
   const processSteps = [
     {
@@ -199,7 +196,7 @@ const Contact = () => {
 
           <ScrollReveal animation="slide-up" delay={200}>
             <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight">
-              Let's Build
+              Let&apos;s Build
               <span className="block text-gradient bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent">
                 Something Amazing
               </span>
@@ -209,7 +206,7 @@ const Contact = () => {
           <ScrollReveal animation="slide-up" delay={400}>
             <p className="text-xl sm:text-2xl text-white/90 max-w-4xl mx-auto mb-12 leading-relaxed">
               Transform your vision into reality with our expert team. From concept to deployment, 
-              we're here to make your digital dreams come true.
+              we&apos;re here to make your digital dreams come true.
             </p>
           </ScrollReveal>
 
@@ -487,7 +484,7 @@ const Contact = () => {
                     <span className="text-gradient"> Information</span>
                   </h2>
                   <p className="text-muted-foreground leading-relaxed text-lg mb-8">
-                    We're here to help you achieve your digital goals. Our expert team is available across multiple time zones to provide you with the best support.
+                    We&apos;re here to help you achieve your digital goals. Our expert team is available across multiple time zones to provide you with the best support.
                   </p>
                 </div>
 
@@ -694,7 +691,7 @@ const Contact = () => {
               </h2>
 
               <p className="text-xl sm:text-2xl text-white/90 max-w-3xl mx-auto mb-12 leading-relaxed">
-                Let's transform your vision into reality. Get a free consultation and project estimate from our expert team.
+                Let&apos;s transform your vision into reality. Get a free consultation and project estimate from our expert team.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
