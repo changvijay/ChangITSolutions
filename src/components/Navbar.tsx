@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Code2, ChevronDown, LogOut, User } from "lucide-react";
+import { Menu, X, ChevronDown, LogOut, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useOptionalAuth } from "@/hooks/useOptionalAuth";
 
@@ -65,9 +66,12 @@ const Navbar = () => {
                 "absolute inset-0 rounded-2xl transition-opacity duration-500",
                 isHovering === "logo" ? "opacity-100" : "opacity-0"
               )} style={{ boxShadow: "inset 0 0 20px rgba(255,255,255,0.3)" }} />
-              <img 
+              <Image 
                 src="/logo.png" 
-                alt="Chang Groups Logo" 
+                alt="Chang Groups Logo"
+                width={56}
+                height={56}
+                priority
                 className={cn(
                   "w-full h-full object-contain relative z-10 transition-all duration-300 drop-shadow-lg rounded-full",
                   isHovering === "logo" && "scale-110 brightness-110"
