@@ -1,1 +1,7 @@
-{"/_app":"pages/_app.js","/_error":"pages/_error.js","/404":"pages/404.html","/About":"pages/About.html","/Contact":"pages/Contact.html","/NotFound":"pages/NotFound.html","/Home":"pages/Home.html","/Products":"pages/Products.html","/Services":"pages/Services.html","/":"pages/index.html","/api/contact":"pages/api/contact.js","/_document":"pages/_document.js"}
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/": "pages/index.js",
+  "/404": "pages/404.js"
+}

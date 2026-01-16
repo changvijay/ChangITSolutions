@@ -55,10 +55,24 @@ const Navbar = () => {
             onMouseLeave={() => setIsHovering(null)}
           >
             <div className={cn(
-              "w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-lg",
-              isHovering === "logo" && "shadow-xl scale-110"
+              "relative w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-600 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-lg overflow-hidden",
+              isHovering === "logo" && "shadow-2xl shadow-purple-500/40 scale-110"
             )}>
-              <Code2 className="w-6 h-6 text-white" />
+              {/* Animated gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-white/20 via-transparent to-transparent opacity-60" />
+              {/* Glow effect */}
+              <div className={cn(
+                "absolute inset-0 rounded-2xl transition-opacity duration-500",
+                isHovering === "logo" ? "opacity-100" : "opacity-0"
+              )} style={{ boxShadow: "inset 0 0 20px rgba(255,255,255,0.3)" }} />
+              <img 
+                src="/logo.png" 
+                alt="Chang Groups Logo" 
+                className={cn(
+                  "w-full h-full object-contain relative z-10 transition-all duration-300 drop-shadow-lg rounded-full",
+                  isHovering === "logo" && "scale-110 brightness-110"
+                )} 
+              />
             </div>
             <div className="flex flex-col">
               <span className="text-xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
