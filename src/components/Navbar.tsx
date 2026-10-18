@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useOptionalAuth } from "@/hooks/useOptionalAuth";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -23,7 +22,6 @@ const Navbar = () => {
   const [isHovering, setIsHovering] = useState<string | null>(null);
   const router = useRouter();
   const currentPath = router.asPath;
-  const { isLoading, isAuthenticated, user, loginWithRedirect, logout, isAvailable } = useOptionalAuth();
 
   useEffect(() => {
     const handleScroll = () => {
