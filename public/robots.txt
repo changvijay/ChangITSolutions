@@ -1,13 +1,16 @@
 User-agent: *
 Allow: /
+Allow: /api/sitemap
 Disallow: /api/
 
 User-agent: Googlebot
 Allow: /
+Allow: /api/sitemap
 Disallow: /api/
 
 User-agent: Bingbot
 Allow: /
+Allow: /api/sitemap
 Disallow: /api/
 
 User-agent: Twitterbot
@@ -16,4 +19,5 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+Sitemap: https://changtechs.com/sitemap.xml
 Sitemap: https://changtechs.com/api/sitemap
