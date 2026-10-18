@@ -20,7 +20,6 @@ import {
   Truck,
   DollarSign,
   Building2,
-  Quote,
   Database,
   Cloud,
   Brain,
@@ -152,38 +151,11 @@ const technologies = [
   { name: 'MongoDB', color: 'text-green-600', bgColor: 'bg-green-600/10' }
 ];
 
-const testimonials = [
-  {
-    name: 'Sarah Johnson',
-    position: 'CEO, TechStart Inc.',
-    content: 'Chang Group transformed our business operations with their innovative CRM solution. Our productivity increased by 40% within the first quarter.',
-    rating: 5,
-    avatar: '👩‍💼',
-    company: 'TechStart Inc.'
-  },
-  {
-    name: 'Michael Chen',
-    position: 'Director, GlobalTrade Ltd.',
-    content: 'The ERP system they developed for us seamlessly integrated all our processes. Exceptional attention to detail and outstanding support.',
-    rating: 5,
-    avatar: '👨‍💼',
-    company: 'GlobalTrade'
-  },
-  {
-    name: 'Emily Rodriguez',
-    position: 'Founder, Creative Agency',
-    content: 'Their custom landing page solution boosted our conversion rates by 65%. The design is beautiful and the performance is outstanding.',
-    rating: 5,
-    avatar: '👩‍🎨',
-    company: 'Creative Co.'
-  }
-];
 
 const Home = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const [scrollY, setScrollY] = useState(0);
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isCalendlyReady, setIsCalendlyReady] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formStatus, setFormStatus] = useState<'idle' | 'success' | 'error'>('idle');
@@ -204,15 +176,9 @@ const Home = () => {
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('scroll', handleScroll);
 
-    // Auto-rotate testimonials
-    const testimonialInterval = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 5000);
-
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('scroll', handleScroll);
-      clearInterval(testimonialInterval);
       if (calendlyIntervalRef.current !== null) {
         window.clearInterval(calendlyIntervalRef.current);
         calendlyIntervalRef.current = null;
@@ -387,7 +353,6 @@ const Home = () => {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
-        <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
       </Head>
       <Script
         src="https://assets.calendly.com/assets/external/widget.js"
@@ -439,8 +404,8 @@ const Home = () => {
 
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 mt-5">
           <div className="max-w-5xl mx-auto text-center">
-            {/* Enhanced Badge with animation */}
-            <div className="inline-flex items-center gap-3 mb-8 px-6 py-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 animate-fade-in shadow-glow group hover:bg-white/15 transition-all cursor-pointer hover:scale-105">
+            {/* Enhanced Badge */}
+            <div className="inline-flex items-center gap-3 mb-8 px-6 py-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 shadow-glow group hover:bg-white/15 transition-all cursor-pointer hover:scale-105">
               <div className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-white animate-pulse" />
                 <Star className="w-4 h-4 text-yellow-300 animate-pulse" style={{ animationDelay: '0.5s' }} />
@@ -451,8 +416,8 @@ const Home = () => {
               </Badge>
             </div>
 
-            {/* Enhanced Headline with staggered animation */}
-            <h1 className="text-3xl sm:text-6xl lg:text-5xl font-bold text-white mb-8 animate-fade-up leading-tight">
+            {/* Enhanced Headline */}
+            <h1 className="text-3xl sm:text-6xl lg:text-5xl font-bold text-white mb-8 leading-tight">
               Transform Your Business with{" "}
               <span className="relative inline-block">
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white/90 to-white/80 animate-pulse">
@@ -464,7 +429,7 @@ const Home = () => {
             </h1>
 
             {/* Enhanced Subheading */}
-            <p className="text-xl sm:text-2xl text-white/90 mb-12 max-w-4xl mx-auto animate-fade-up leading-relaxed" style={{ animationDelay: '0.1s' }}>
+            <p className="text-xl sm:text-2xl text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed">
               Custom CRM, ERP systems, and cutting-edge web applications designed to{" "}
               <span className="text-white font-semibold relative">
                 streamline operations
@@ -477,7 +442,7 @@ const Home = () => {
             </p>
 
             {/* Enhanced CTA Buttons with improved interactions */}
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
               <Link href="/Contact">
                 <Button
                   size="lg"
@@ -1034,125 +999,6 @@ const Home = () => {
           </ScrollReveal>
         </div>
       </section>
-
-      {/* Enhanced Testimonials Section with carousel */}
-      <section className="py-16 sm:py-20 px-4">
-        <div className="container mx-auto">
-          {/* Section Header */}
-          <ScrollReveal animation="slide-up">
-            <div className="text-center mb-12 sm:mb-16">
-              <Badge
-                variant="outline"
-                className="mb-4 px-4 py-2 text-primary border-primary/20 bg-primary/5"
-              >
-                Testimonials
-              </Badge>
-              <h2 className="text-3xl sm:text-5xl font-display font-bold mb-4 sm:mb-6 leading-tight">
-                Loved by <span className="text-gradient">Our Clients</span>
-              </h2>
-              <p className="text-base sm:text-xl text-muted-foreground max-w-xl sm:max-w-2xl mx-auto font-light px-2">
-                Don&apos;t just take our word for it — hear from businesses we&apos;ve helped transform.
-              </p>
-            </div>
-          </ScrollReveal>
-
-          {/* Featured Testimonial Carousel */}
-          <div className="max-w-3xl sm:max-w-4xl mx-auto mb-10 sm:mb-12">
-            <GlassCard className="p-6 sm:p-8 md:p-12 relative overflow-hidden">
-              <Quote className="absolute top-3 sm:top-4 right-3 sm:right-4 h-10 sm:h-16 w-10 sm:w-16 text-primary/10" />
-              <div className="relative z-10">
-                <div className="flex flex-wrap items-center justify-center sm:justify-start mb-4 sm:mb-6 gap-1">
-                  {[...Array(testimonials[currentTestimonial].rating)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-400 fill-current animate-pulse"
-                      style={{ animationDelay: `${i * 0.1}s` }}
-                    />
-                  ))}
-                </div>
-
-                <p className="text-base sm:text-xl md:text-2xl text-foreground font-light leading-relaxed mb-6 sm:mb-8 italic text-center sm:text-left">
-                  &quot;{testimonials[currentTestimonial].content}&quot;
-                </p>
-
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 sm:gap-0">
-                  <div className="flex items-center justify-center sm:justify-start">
-                    <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-primary/20 to-blue-500/20 rounded-full flex items-center justify-center mr-3 sm:mr-4 text-2xl">
-                      {testimonials[currentTestimonial].avatar}
-                    </div>
-                    <div className="text-center sm:text-left">
-                      <div className="font-semibold text-foreground text-lg sm:text-xl">
-                        {testimonials[currentTestimonial].name}
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        {testimonials[currentTestimonial].position}
-                      </div>
-                      <div className="text-xs text-primary font-medium">
-                        {testimonials[currentTestimonial].company}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Carousel Indicators */}
-                  <div className="flex items-center justify-center sm:justify-end gap-2">
-                    {testimonials.map((_, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => setCurrentTestimonial(idx)}
-                        className={`h-2 rounded-full transition-all duration-300 ${idx === currentTestimonial
-                          ? "bg-primary w-6 sm:w-8"
-                          : "bg-primary/20 hover:bg-primary/40 w-2"
-                          }`}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </GlassCard>
-          </div>
-
-          {/* All Testimonials Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {testimonials.map((testimonial, index) => (
-              <ScrollReveal
-                key={testimonial.name}
-                animation="slide-up"
-                delay={index * 150}
-              >
-                <GlassCard className="relative group h-full hover:scale-[1.02] transition-all duration-300 cursor-pointer">
-                  <Quote className="absolute top-3 right-3 sm:top-4 sm:right-4 h-6 sm:h-8 w-6 sm:w-8 text-primary/20 group-hover:text-primary/40 transition-colors" />
-
-                  <div className="mb-5 sm:mb-6">
-                    <div className="flex flex-wrap items-center mb-3 sm:mb-4 gap-1">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
-                      ))}
-                    </div>
-                    <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed line-clamp-5">
-                      &quot;{testimonial.content}&quot;
-                    </p>
-                  </div>
-
-                  <div className="flex items-center justify-start">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-primary/20 to-blue-500/20 rounded-full flex items-center justify-center mr-3 sm:mr-4 text-lg sm:text-xl group-hover:scale-110 transition-transform">
-                      {testimonial.avatar}
-                    </div>
-                    <div>
-                      <div className="font-semibold text-foreground text-sm sm:text-base">
-                        {testimonial.name}
-                      </div>
-                      <div className="text-xs sm:text-sm text-muted-foreground">
-                        {testimonial.position}
-                      </div>
-                    </div>
-                  </div>
-                </GlassCard>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
 
       {/* Enhanced Industries Section */}
       <section className="py-20 px-4 bg-gradient-to-bl from-background to-secondary/20">

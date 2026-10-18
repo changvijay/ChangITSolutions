@@ -235,7 +235,6 @@ const Contact = () => {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema) }}
         />
-        <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
       </Head>
       <Script
         src="https://assets.calendly.com/assets/external/widget.js"
@@ -253,77 +252,67 @@ const Contact = () => {
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <ScrollReveal animation="fade">
+          <div>
             <div className="inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-md rounded-full border border-white/30 text-white mb-8">
               <Star className="w-4 h-4 mr-2 text-yellow-300" />
               <span className="text-sm font-medium">Trusted by 500+ Clients Worldwide</span>
             </div>
-          </ScrollReveal>
+          </div>
 
-          <ScrollReveal animation="slide-up" delay={200}>
-            <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight">
-              Let&apos;s Build
-              <span className="block text-gradient bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent">
-                Something Amazing
-              </span>
-            </h1>
-          </ScrollReveal>
+          <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight">
+            Let&apos;s Build
+            <span className="block text-gradient bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent">
+              Something Amazing
+            </span>
+          </h1>
 
-          <ScrollReveal animation="slide-up" delay={400}>
-            <p className="text-xl sm:text-2xl text-white/90 max-w-4xl mx-auto mb-12 leading-relaxed">
-              Transform your vision into reality with our expert team. From concept to deployment,
-              we&apos;re here to make your digital dreams come true.
-            </p>
-          </ScrollReveal>
+          <p className="text-xl sm:text-2xl text-white/90 max-w-4xl mx-auto mb-12 leading-relaxed">
+            Transform your vision into reality with our expert team. From concept to deployment,
+            we&apos;re here to make your digital dreams come true.
+          </p>
 
-          <ScrollReveal animation="slide-up" delay={600}>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
-              <NextLink href="/Services">
-                <Button size="lg" className="group bg-white text-primary hover:bg-white/90 hover:scale-105 transition-all duration-300 shadow-glow">
-                  <MessageCircle className="w-5 h-5 mr-2" />
-                  Start Free Consultation
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </NextLink>
-              <Button size="lg" variant="outline" className="group border-white/30 text-primary hover:bg-white/10 hover:scale-105 transition-all duration-300">
-                <Phone className="w-5 h-5 mr-2" />
-                Call Now: +91 7010747878
+          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
+            <NextLink href="/Services">
+              <Button size="lg" className="group bg-white text-primary hover:bg-white/90 hover:scale-105 transition-all duration-300 shadow-glow">
+                <MessageCircle className="w-5 h-5 mr-2" />
+                Start Free Consultation
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
-            </div>
-          </ScrollReveal>
+            </NextLink>
+            <Button size="lg" variant="outline" className="group border-white/30 text-primary hover:bg-white/10 hover:scale-105 transition-all duration-300">
+              <Phone className="w-5 h-5 mr-2" />
+              Call Now: +91 7010747878
+            </Button>
+          </div>
 
-          <ScrollReveal animation="slide-up" delay={800}>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto">
-              {[
-                { icon: Shield, title: "100% Secure", desc: "NDA & Data Protection" },
-                { icon: Zap, title: "24-48 Hours", desc: "Guaranteed Response" },
-                { icon: Award, title: "Expert Team", desc: "Certified Professionals" }
-              ].map((item, index) => (
-                <div key={index} className="group">
-                  <div className="glass-card text-center hover:scale-105 transition-all duration-300">
-                    <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-white/30 transition-colors">
-                      <item.icon className="w-6 h-6 text-white" />
-                    </div>
-                    <h3 className="font-semibold text-white mb-2">{item.title}</h3>
-                    <p className="text-sm text-white/80">{item.desc}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            {[
+              { icon: Shield, title: "100% Secure", desc: "NDA & Data Protection" },
+              { icon: Zap, title: "24-48 Hours", desc: "Guaranteed Response" },
+              { icon: Award, title: "Expert Team", desc: "Certified Professionals" }
+            ].map((item, index) => (
+              <div key={index} className="group">
+                <div className="glass-card text-center hover:scale-105 transition-all duration-300">
+                  <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-white/30 transition-colors">
+                    <item.icon className="w-6 h-6 text-white" />
                   </div>
+                  <h3 className="font-semibold text-white mb-2">{item.title}</h3>
+                  <p className="text-sm text-white/80">{item.desc}</p>
                 </div>
-              ))}
-            </div>
-          </ScrollReveal>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Scroll Indicator */}
-        <ScrollReveal animation="fade" delay={1000}>
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/60 animate-bounce">
-            <div className="flex flex-col items-center">
-              <span className="text-sm mb-2">Scroll to explore</span>
-              <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
-                <div className="w-1 h-3 bg-white/60 rounded-full mt-2 animate-bounce"></div>
-              </div>
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/60 animate-bounce">
+          <div className="flex flex-col items-center">
+            <span className="text-sm mb-2">Scroll to explore</span>
+            <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+              <div className="w-1 h-3 bg-white/60 rounded-full mt-2 animate-bounce"></div>
             </div>
           </div>
-        </ScrollReveal>
+        </div>
       </section>
 
       {/* Enhanced Quick Contact Methods */}

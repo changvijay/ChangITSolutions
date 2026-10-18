@@ -494,7 +494,7 @@ const Hero = () => {
       <div className="container relative z-10 mx-auto px-4 py-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left content */}
-          <div className="space-y-8 animate-fade-in">
+          <div className="space-y-8">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/95 backdrop-blur-sm shadow-lg">
               <div className="w-2 h-2 bg-accent rounded-full animate-pulse" />
@@ -551,7 +551,7 @@ const Hero = () => {
           </div>
           
           {/* Right content - Dashboard Placeholder */}
-          <div className="relative animate-scale-in">
+          <div className="relative">
             <div className="relative z-10 animate-float">
               <div className="w-full h-96 bg-gradient-to-br from-secondary/20 to-primary/20 rounded-2xl shadow-2xl flex items-center justify-center border border-border">
                 <div className="text-center space-y-4">

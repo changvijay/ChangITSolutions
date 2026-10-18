@@ -97,9 +97,7 @@ const Products = () => {
 
   return (
     <div className="min-h-screen">
-      <Head>
-        <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
-      </Head>
+
       <Script
         src="https://assets.calendly.com/assets/external/widget.js"
         strategy="afterInteractive"
@@ -128,61 +126,53 @@ const Products = () => {
 
         <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-20">
           <div className="text-center max-w-5xl mx-auto">
-            <ScrollReveal animation="fade" delay={300}>
+            <div>
               <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white mb-6">
                 <Star className="w-4 h-4 mr-2 text-yellow-400" />
                 <span className="text-sm font-medium">Industry-Leading Solutions</span>
               </div>
-            </ScrollReveal>
+            </div>
 
-            <ScrollReveal animation="slide-up" delay={500}>
-              <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight">
-                Transform Your
-                <span className="block bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                  Business Today
+            <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight">
+              Transform Your
+              <span className="block bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Business Today
+              </span>
+            </h1>
+
+            <p className="text-xl sm:text-2xl text-white/80 mb-12 max-w-4xl mx-auto leading-relaxed">
+              Discover our suite of innovative products designed to revolutionize your operations, 
+              boost efficiency, and accelerate growth across every aspect of your business.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+              <button className="group relative px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full text-white font-semibold text-lg overflow-hidden hover:scale-105 transition-all duration-300 shadow-2xl">
+                <span className="relative z-10 flex items-center">
+                  Explore Products
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </span>
-              </h1>
-            </ScrollReveal>
-
-            <ScrollReveal animation="slide-up" delay={700}>
-              <p className="text-xl sm:text-2xl text-white/80 mb-12 max-w-4xl mx-auto leading-relaxed">
-                Discover our suite of innovative products designed to revolutionize your operations, 
-                boost efficiency, and accelerate growth across every aspect of your business.
-              </p>
-            </ScrollReveal>
-
-            <ScrollReveal animation="scale" delay={900}>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-                <button className="group relative px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full text-white font-semibold text-lg overflow-hidden hover:scale-105 transition-all duration-300 shadow-2xl">
-                  <span className="relative z-10 flex items-center">
-                    Explore Products
-                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </button>
-                <button className="px-8 py-4 border-2 border-white/30 rounded-full text-white font-semibold text-lg hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm">
-                  Watch Demo
-                </button>
-              </div>
-            </ScrollReveal>
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </button>
+              <button className="px-8 py-4 border-2 border-white/30 rounded-full text-white font-semibold text-lg hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm">
+                Watch Demo
+              </button>
+            </div>
 
             {/* Stats */}
-            <ScrollReveal animation="slide-up" delay={1100}>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-3xl mx-auto">
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-white mb-2">50+</div>
-                  <div className="text-white/70">Happy Clients</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-white mb-2">99.9%</div>
-                  <div className="text-white/70">Uptime</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-white mb-2">24/7</div>
-                  <div className="text-white/70">Support</div>
-                </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-3xl mx-auto">
+              <div className="text-center">
+                <div className="text-4xl font-bold text-white mb-2">50+</div>
+                <div className="text-white/70">Happy Clients</div>
               </div>
-            </ScrollReveal>
+              <div className="text-center">
+                <div className="text-4xl font-bold text-white mb-2">99.9%</div>
+                <div className="text-white/70">Uptime</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-bold text-white mb-2">24/7</div>
+                <div className="text-white/70">Support</div>
+              </div>
+            </div>
           </div>
         </div>
 

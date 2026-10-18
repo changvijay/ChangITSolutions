@@ -11,7 +11,6 @@ import {
   ArrowRight, Star, MapPin, Brain, Heart, Zap,
   CheckCircle, Building, Calendar
 } from "lucide-react";
-import Testimonials from "@/components/Testimonials";
 
 const CALENDLY_URL = "https://calendly.com/changvijay54";
 
@@ -203,7 +202,6 @@ const About = () => {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageSchema) }}
         />
-        <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
       </Head>
       <Script
         src="https://assets.calendly.com/assets/external/widget.js"
@@ -225,45 +223,39 @@ const About = () => {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Left Content */}
             <div className="text-left">
-              <ScrollReveal animation="fade" delay={200}>
+              <div>
                 <Badge variant="secondary" className="mb-6 px-4 py-2 text-sm font-semibold">
                   <Star className="w-4 h-4 mr-2" />
                   Trusted by 500+ Global Companies
                 </Badge>
-              </ScrollReveal>
+              </div>
 
-              <ScrollReveal animation="slide-up" delay={400}>
-                <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight">
-                  About
-                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400">
-                    Chang Groups
-                  </span>
-                </h1>
-              </ScrollReveal>
+              <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight">
+                About
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400">
+                  Chang Groups
+                </span>
+              </h1>
 
-              <ScrollReveal animation="slide-up" delay={600}>
-                <p className="text-xl text-white/90 mb-8 leading-relaxed">
-                  Your trusted partner in digital transformation with over a decade of excellence.
-                  We don&apos;t just build software – we craft digital experiences that revolutionize businesses.
-                </p>
-              </ScrollReveal>
+              <p className="text-xl text-white/90 mb-8 leading-relaxed">
+                Your trusted partner in digital transformation with over a decade of excellence.
+                We don&apos;t just build software – we craft digital experiences that revolutionize businesses.
+              </p>
             </div>
 
             {/* Right Content - Stats */}
             <div className="grid grid-cols-2 gap-6">
               {stats.map((stat, index) => (
-                <ScrollReveal key={index} animation="scale" delay={600 + index * 100}>
-                  <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20 transition-all duration-300">
-                    <CardContent className="p-6 text-center">
-                      <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 flex items-center justify-center">
-                        <stat.icon className="w-8 h-8 text-white" />
-                      </div>
-                      <div className="text-3xl font-bold text-white mb-2">{stat.number}</div>
-                      <div className="text-white/90 font-medium mb-1">{stat.label}</div>
-                      <div className="text-white/70 text-sm">{stat.description}</div>
-                    </CardContent>
-                  </Card>
-                </ScrollReveal>
+                <Card key={index} className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20 transition-all duration-300">
+                  <CardContent className="p-6 text-center">
+                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 flex items-center justify-center">
+                      <stat.icon className="w-8 h-8 text-white" />
+                    </div>
+                    <div className="text-3xl font-bold text-white mb-2">{stat.number}</div>
+                    <div className="text-white/90 font-medium mb-1">{stat.label}</div>
+                    <div className="text-white/70 text-sm">{stat.description}</div>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           </div>
@@ -579,9 +571,6 @@ const About = () => {
           </div>
         </div>
       </section>
-
-      {/* Testimonials */}
-      <Testimonials />
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 relative overflow-hidden">
