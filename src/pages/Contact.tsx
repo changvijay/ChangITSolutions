@@ -8,11 +8,11 @@ import NextLink from "next/link";
 import Head from "next/head";
 import Script from "next/script";
 import { useCalendlyPopup } from "@/hooks/useCalendlyPopup";
-import { 
-  Mail, 
-  Phone, 
-  Send, 
-  Clock, 
+import {
+  Mail,
+  Phone,
+  Send,
+  Clock,
   Globe,
   MessageCircle,
   Calendar,
@@ -93,8 +93,8 @@ const Contact = () => {
       title: "Email Us",
       description: "Send us an email anytime",
       details: "We respond within 2 hours",
-      contact: "changvijay54@gmail.com",
-      link: "mailto:changvijay54@gmail.com",
+      contact: "info@changtechs.com",
+      link: "mailto:info@changtechs.com",
       type: "link" as const
     },
     {
@@ -166,9 +166,75 @@ const Contact = () => {
     }
   ];
 
+  const contactPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "@id": "https://changtechs.com/Contact#webpage",
+    url: "https://changtechs.com/Contact",
+    name: "Contact Chang Groups | Get a Free Custom Software Consultation",
+    description:
+      "Contact Chang Groups IT Solutions for a free consultation on custom software development — CRM, ERP, web applications, AI integration, and mobile apps.",
+    inLanguage: "en-US",
+    breadcrumb: {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://changtechs.com" },
+        { "@type": "ListItem", position: 2, name: "Contact", item: "https://changtechs.com/Contact" },
+      ],
+    },
+    mainEntity: {
+      "@type": "Organization",
+      name: "Chang Groups IT Solutions",
+      url: "https://changtechs.com",
+      email: "info@changtechs.com",
+      telephone: "+91-7010747878",
+      contactPoint: [
+        {
+          "@type": "ContactPoint",
+          telephone: "+91-7010747878",
+          contactType: "sales",
+          areaServed: "Worldwide",
+          availableLanguage: "English",
+        },
+        {
+          "@type": "ContactPoint",
+          contactType: "customer support",
+          availableLanguage: "English",
+          hoursAvailable: {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            opens: "09:00",
+            closes: "18:00",
+          },
+        },
+      ],
+    },
+  };
+
   return (
     <div className="min-h-screen pt-20">
       <Head>
+        <title>Contact Chang Groups | Get a Free Custom Software Consultation</title>
+        <meta
+          name="description"
+          content="Get a free consultation with Chang Groups IT Solutions. We build custom CRM, ERP, web applications, AI integrations & mobile apps. Call +91 7010747878 or email info@changtechs.com."
+        />
+        <link rel="canonical" href="https://changtechs.com/Contact" />
+        <meta property="og:url" content="https://changtechs.com/Contact" />
+        <meta property="og:title" content="Contact Chang Groups | Get a Free Custom Software Consultation" />
+        <meta
+          property="og:description"
+          content="Get a free consultation. Custom CRM, ERP, web apps, AI integrations & mobile apps. Reach us at info@changtechs.com or +91 7010747878."
+        />
+        <meta name="twitter:title" content="Contact Chang Groups | Free Custom Software Consultation" />
+        <meta
+          name="twitter:description"
+          content="Free consultation for custom CRM, ERP, web apps & AI integrations. Email info@changtechs.com or call +91 7010747878."
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema) }}
+        />
         <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
       </Head>
       <Script
@@ -205,7 +271,7 @@ const Contact = () => {
 
           <ScrollReveal animation="slide-up" delay={400}>
             <p className="text-xl sm:text-2xl text-white/90 max-w-4xl mx-auto mb-12 leading-relaxed">
-              Transform your vision into reality with our expert team. From concept to deployment, 
+              Transform your vision into reality with our expert team. From concept to deployment,
               we&apos;re here to make your digital dreams come true.
             </p>
           </ScrollReveal>
@@ -275,7 +341,7 @@ const Contact = () => {
                 <span className="text-sm font-medium">24/7 Support Available</span>
               </div>
               <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">
-                Multiple Ways to 
+                Multiple Ways to
                 <span className="text-gradient"> Connect</span>
               </h2>
               <p className="text-muted-foreground text-xl max-w-3xl mx-auto leading-relaxed">
@@ -291,7 +357,7 @@ const Contact = () => {
                   <CardContent className="p-8 relative">
                     {/* Glow Effect */}
                     <div className="absolute inset-0 rounded-lg bg-gradient-primary opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
-                    
+
                     <div className="relative z-10">
                       <div className="w-16 h-16 rounded-2xl bg-gradient-primary flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-primary">
                         <method.icon className="w-8 h-8 text-white" />
@@ -313,7 +379,7 @@ const Contact = () => {
                           <ArrowRight className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" />
                         </button>
                       ) : (
-                        <a 
+                        <a
                           href={method.link}
                           className="group/link inline-flex items-center text-foreground hover:text-primary transition-all duration-300 font-medium"
                         >
@@ -366,7 +432,7 @@ const Contact = () => {
                     <span className="text-sm font-medium">Get Your Free Quote</span>
                   </div>
                   <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">
-                    Start Your 
+                    Start Your
                     <span className="text-gradient"> Project</span>
                   </h2>
                   <p className="text-muted-foreground leading-relaxed text-lg">
@@ -480,7 +546,7 @@ const Contact = () => {
                     <span className="text-sm font-medium">Global Support Team</span>
                   </div>
                   <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">
-                    Contact 
+                    Contact
                     <span className="text-gradient"> Information</span>
                   </h2>
                   <p className="text-muted-foreground leading-relaxed text-lg mb-8">
@@ -493,9 +559,9 @@ const Contact = () => {
                     {
                       icon: Mail,
                       title: "Email Support",
-                      details: "changvijay54@gmail.com",
+                      details: "info@changtechs.com",
                       description: "General inquiries and project discussions",
-                      link: "mailto:changvijay54@gmail.com",
+                      link: "mailto:info@changtechs.com",
                       color: "from-blue-500 to-cyan-500"
                     },
                     {
@@ -535,7 +601,7 @@ const Contact = () => {
                               <p className="text-foreground font-semibold mb-2">{item.details}</p>
                               <p className="text-muted-foreground leading-relaxed mb-4">{item.description}</p>
                               {item.link !== "#" && (
-                                <a 
+                                <a
                                   href={item.link}
                                   className="inline-flex items-center text-sm font-medium text-primary hover:text-secondary transition-colors group/link"
                                 >
@@ -573,11 +639,11 @@ const Contact = () => {
                 <span className="text-sm font-medium">Proven Methodology</span>
               </div>
               <h2 className="text-5xl sm:text-6xl font-bold text-foreground mb-6">
-                Our 
+                Our
                 <span className="text-gradient"> Process</span>
               </h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                From initial contact to project delivery, we follow a structured approach that ensures 
+                From initial contact to project delivery, we follow a structured approach that ensures
                 quality, transparency, and client satisfaction at every step.
               </p>
             </div>
@@ -594,18 +660,18 @@ const Contact = () => {
                         <div className="w-0 h-full bg-gradient-to-r from-primary to-secondary group-hover:w-full transition-all duration-1000 ease-out"></div>
                       </div>
                     )}
-                    
+
                     <div className="relative">
                       <div className="w-24 h-24 rounded-2xl bg-gradient-primary flex items-center justify-center mx-auto mb-8 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-glow">
                         <span className="text-white font-bold text-2xl">{step.step}</span>
                       </div>
-                      
+
                       {/* Floating Badge */}
                       <div className="absolute -top-2 -right-2 w-8 h-8 bg-secondary rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <CheckCircle2 className="w-4 h-4 text-white" />
                       </div>
                     </div>
-                    
+
                     <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
                       {step.title}
                     </h3>
@@ -703,7 +769,7 @@ const Contact = () => {
                   </div>
                   <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
-                
+
                 <Button
                   size="lg"
                   variant="outline"

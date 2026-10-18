@@ -153,9 +153,56 @@ const About = () => {
     },
   ];
 
+  const aboutPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "@id": "https://changtechs.com/About#webpage",
+    url: "https://changtechs.com/About",
+    name: "About Chang Groups | Custom Software Development Company",
+    description:
+      "Learn about Chang Groups IT Solutions — a decade of expertise in custom software development, CRM, ERP, and digital transformation for 500+ clients worldwide.",
+    inLanguage: "en-US",
+    breadcrumb: {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://changtechs.com" },
+        { "@type": "ListItem", position: 2, name: "About", item: "https://changtechs.com/About" },
+      ],
+    },
+    about: {
+      "@type": "Organization",
+      name: "Chang Groups IT Solutions",
+      foundingDate: "2014",
+      numberOfEmployees: { "@type": "QuantitativeValue", value: "85+" },
+      description:
+        "Leading custom software development company with expertise in CRM, ERP, web applications, AI integration, and mobile development.",
+    },
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Head>
+        <title>About Chang Groups | Custom Software Development Company</title>
+        <meta
+          name="description"
+          content="Learn about Chang Groups IT Solutions — a decade of expertise building custom CRM, ERP, web applications & AI integrations for 500+ businesses worldwide. Meet our expert team."
+        />
+        <link rel="canonical" href="https://changtechs.com/About" />
+        <meta property="og:url" content="https://changtechs.com/About" />
+        <meta property="og:title" content="About Chang Groups | Custom Software Development Company" />
+        <meta
+          property="og:description"
+          content="A decade of expertise in custom software development — CRM, ERP, web apps, and AI integrations for 500+ clients worldwide. Learn our story."
+        />
+        <meta name="twitter:title" content="About Chang Groups | Custom Software Development Company" />
+        <meta
+          name="twitter:description"
+          content="A decade of expertise in custom CRM, ERP & web app development for 500+ clients. Learn our story."
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageSchema) }}
+        />
         <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
       </Head>
       <Script

@@ -105,9 +105,73 @@ const CALENDLY_URL = "https://calendly.com/changvijay54";
 const Services = () => {
   const { handleCalendlyLoaded, triggerCalendlyPopup } = useCalendlyPopup(CALENDLY_URL);
 
+  const servicesPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://changtechs.com/Services#webpage",
+    url: "https://changtechs.com/Services",
+    name: "IT Services | Chang Groups — CRM, ERP, Web App & AI Development",
+    description:
+      "Explore Chang Groups' full range of custom software development services: CRM, ERP, chatbot development, IT consulting, UI/UX design, and business intelligence solutions.",
+    inLanguage: "en-US",
+    breadcrumb: {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://changtechs.com" },
+        { "@type": "ListItem", position: 2, name: "Services", item: "https://changtechs.com/Services" },
+      ],
+    },
+  };
+
+  const servicesItemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Custom Software Development Services",
+    description: "Comprehensive IT and custom software development services by Chang Groups.",
+    itemListElement: services.map((service, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "Service",
+        name: service.title,
+        description: service.description,
+        provider: {
+          "@type": "Organization",
+          name: "Chang Groups IT Solutions",
+          url: "https://changtechs.com",
+        },
+      },
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Head>
+        <title>IT Services | Chang Groups — CRM, ERP, Web App & AI Development</title>
+        <meta
+          name="description"
+          content="Explore Chang Groups' custom software services: CRM development, ERP systems, chatbot development, IT consulting, UI/UX design & business intelligence. Free consultation."
+        />
+        <link rel="canonical" href="https://changtechs.com/Services" />
+        <meta property="og:url" content="https://changtechs.com/Services" />
+        <meta property="og:title" content="IT Services | Chang Groups — CRM, ERP, Web App & AI Development" />
+        <meta
+          property="og:description"
+          content="Custom software development services: CRM, ERP, chatbots, IT consulting, UI/UX design & analytics. Transform your business. Free consultation."
+        />
+        <meta name="twitter:title" content="IT Services | Chang Groups — CRM, ERP, Web App & AI Development" />
+        <meta
+          name="twitter:description"
+          content="Custom software services: CRM, ERP, chatbots, IT consulting, UI/UX & analytics. Free consultation."
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesPageSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesItemListSchema) }}
+        />
         <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
       </Head>
       <Script

@@ -20,7 +20,9 @@ const App = ({ Component, pageProps }: AppProps) => {
           <Toaster />
           <Sonner />
           <Navbar />
-          <Component {...pageProps} />
+          <main id="main-content" tabIndex={-1}>
+            <Component {...pageProps} />
+          </main>
           <Footer />
         </TooltipProvider>
       </Auth0Provider>

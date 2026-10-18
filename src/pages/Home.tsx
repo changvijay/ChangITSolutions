@@ -329,9 +329,64 @@ const Home = () => {
     }
   };
 
+  const homePageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://changtechs.com/#webpage",
+    url: "https://changtechs.com",
+    name: "Chang Groups IT Solutions | Custom Software Development Company",
+    description:
+      "Expert custom software development — CRM systems, ERP platforms, web apps, AI integrations & mobile apps. Free consultation. Trusted by 500+ businesses worldwide.",
+    inLanguage: "en-US",
+    isPartOf: { "@id": "https://changtechs.com/#website" },
+    breadcrumb: {
+      "@type": "BreadcrumbList",
+      itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: "https://changtechs.com" }],
+    },
+  };
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://changtechs.com/#website",
+    url: "https://changtechs.com",
+    name: "Chang Groups IT Solutions",
+    description: "Custom software development company — CRM, ERP, web apps, AI & mobile solutions.",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: { "@type": "EntryPoint", urlTemplate: "https://changtechs.com/?s={search_term_string}" },
+      "query-input": "required name=search_term_string",
+    },
+  };
+
   return (
     <div className="min-h-screen">
       <Head>
+        <title>Chang Groups IT Solutions | Custom Software Development Company</title>
+        <meta
+          name="description"
+          content="Expert custom software development — CRM systems, ERP platforms, web apps, AI integrations & mobile apps that drive business growth. 500+ companies served. Free consultation."
+        />
+        <link rel="canonical" href="https://changtechs.com" />
+        <meta property="og:url" content="https://changtechs.com" />
+        <meta property="og:title" content="Chang Groups IT Solutions | Custom Software Development Company" />
+        <meta
+          property="og:description"
+          content="Expert custom software development — CRM, ERP, web apps, AI integrations & mobile apps. Transform your business. Free consultation."
+        />
+        <meta name="twitter:title" content="Chang Groups IT Solutions | Custom Software Development Company" />
+        <meta
+          name="twitter:description"
+          content="Expert custom software development — CRM, ERP, web apps, AI integrations & mobile apps. Free consultation."
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
         <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
       </Head>
       <Script
@@ -1172,7 +1227,7 @@ const Home = () => {
 
                 <div className="space-y-6 mb-8">
                   {[
-                    { icon: Mail, label: "Email", value: "changvijay54@gmail.com", gradient: "from-blue-500 to-cyan-500" },
+                    { icon: Mail, label: "Email", value: "info@changtechs.com", gradient: "from-blue-500 to-cyan-500" },
                     { icon: Phone, label: "Phone", value: "+91 7010747878", gradient: "from-green-500 to-emerald-500" },
                     { icon: MapPin, label: "Office", value: "109, Pillayar Kovil St. · Kalathur · Ranipet · TN 632531", gradient: "from-purple-500 to-pink-500" }
                   ].map((item, idx) => (

@@ -39,6 +39,7 @@ const Navbar = () => {
 
   return (
     <nav
+      aria-label="Main navigation"
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
         isScrolled
@@ -49,8 +50,8 @@ const Navbar = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Enhanced Logo */}
-          <Link 
-            href="/" 
+          <Link
+            href="/"
             className="flex items-center gap-3 group relative"
             onMouseEnter={() => setIsHovering("logo")}
             onMouseLeave={() => setIsHovering(null)}
@@ -66,8 +67,8 @@ const Navbar = () => {
                 "absolute inset-0 rounded-2xl transition-opacity duration-500",
                 isHovering === "logo" ? "opacity-100" : "opacity-0"
               )} style={{ boxShadow: "inset 0 0 20px rgba(255,255,255,0.3)" }} />
-              <Image 
-                src="/logo.png" 
+              <Image
+                src="/logo.png"
                 alt="Chang Groups Logo"
                 width={56}
                 height={56}
@@ -75,7 +76,7 @@ const Navbar = () => {
                 className={cn(
                   "w-full h-full object-contain relative z-10 transition-all duration-300 drop-shadow-lg rounded-full",
                   isHovering === "logo" && "scale-110 brightness-110"
-                )} 
+                )}
               />
             </div>
             <div className="flex flex-col">
@@ -107,8 +108,8 @@ const Navbar = () => {
                   <span
                     className={cn(
                       "absolute bottom-0 left-1/2 w-0 h-0.5 bg-primary transition-all duration-300 -translate-x-1/2",
-                      currentPath === link.path 
-                        ? "w-4/5" 
+                      currentPath === link.path
+                        ? "w-4/5"
                         : "group-hover:w-4/5"
                     )}
                   />
@@ -119,45 +120,7 @@ const Navbar = () => {
 
           {/* Enhanced CTA Button */}
           <div className="hidden md:flex items-center gap-4">
-            {isLoading ? (
-              <Button variant="ghost" disabled>
-                Loading...
-              </Button>
-            ) : isAuthenticated ? (
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-accent/50">
-                  <User className="w-4 h-4" />
-                  <span className="text-sm font-medium">
-                    {user?.name || user?.email || 'User'}
-                  </span>
-                </div>
-                <Button 
-                  variant="ghost"
-                  onClick={() => logout({ logoutParams: { returnTo: typeof window !== "undefined" ? window.location.origin : undefined } })}
-                  className="text-foreground/80 hover:text-white font-medium transition-colors"
-                >
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Sign Out
-                </Button>
-              </div>
-            ) : isAvailable ? (
-              <Button
-                variant="ghost"
-                onClick={() => loginWithRedirect()}
-                className="text-foreground/80 hover:text-white font-medium transition-colors"
-              >
-                Sign In
-              </Button>
-            ) : (
-              <Button
-                variant="ghost"
-                disabled
-                className="text-foreground/50 font-medium"
-                title="Authentication not configured"
-              >
-                Sign In
-              </Button>
-            )}
+
             <Link href="/Contact">
               <Button
                 className={cn(
@@ -176,8 +139,8 @@ const Navbar = () => {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className={cn(
               "md:hidden p-3 rounded-xl transition-all duration-300",
-              isMobileMenuOpen 
-                ? "bg-accent text-foreground" 
+              isMobileMenuOpen
+                ? "bg-accent text-foreground"
                 : "bg-transparent hover:bg-accent/50 text-foreground"
             )}
           >
@@ -217,45 +180,7 @@ const Navbar = () => {
             </Link>
           ))}
           <div className="pt-4 px-4 space-y-3">
-            {isLoading ? (
-              <Button variant="outline" className="w-full" disabled>
-                Loading...
-              </Button>
-            ) : isAuthenticated ? (
-              <div className="space-y-3">
-                <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-accent/50">
-                  <User className="w-4 h-4" />
-                  <span className="text-sm font-medium">
-                    {user?.name || user?.email || 'User'}
-                  </span>
-                </div>
-                <Button 
-                  variant="outline" 
-                  className="w-full font-medium"
-                  onClick={() => logout({ logoutParams: { returnTo: typeof window !== "undefined" ? window.location.origin : undefined } })}
-                >
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Sign Out
-                </Button>
-              </div>
-            ) : isAvailable ? (
-              <Button 
-                variant="outline" 
-                className="w-full font-medium"
-                onClick={() => loginWithRedirect()}
-              >
-                Sign In
-              </Button>
-            ) : (
-              <Button 
-                variant="outline" 
-                className="w-full font-medium" 
-                disabled
-                title="Authentication not configured"
-              >
-                Sign In
-              </Button>
-            )}
+
             <Link href="/contact" className="block">
               <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 font-semibold">
                 Get Started
