@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Sparkles, CheckCircle2, ArrowRight, Users, BarChart3, CreditCard, BookOpen, Utensils, Star, Zap, Shield, Rocket, Globe, TrendingUp } from "lucide-react";
 import TechStack from "@/components/TechStack";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import Head from "next/head";
 import Script from "next/script";
 import NextLink from "next/link";
 import { useCalendlyPopup } from "@/hooks/useCalendlyPopup";
@@ -109,7 +108,7 @@ const Products = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)] animate-pulse"></div>
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-float"></div>
         <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-        
+
         {/* Floating Particles */}
         {Array.from({ length: 20 }).map((_, i) => (
           <div
@@ -141,7 +140,7 @@ const Products = () => {
             </h1>
 
             <p className="text-xl sm:text-2xl text-white/80 mb-12 max-w-4xl mx-auto leading-relaxed">
-              Discover our suite of innovative products designed to revolutionize your operations, 
+              Discover our suite of innovative products designed to revolutionize your operations,
               boost efficiency, and accelerate growth across every aspect of your business.
             </p>
 
@@ -187,13 +186,13 @@ const Products = () => {
       {/* Products Showcase */}
       <section className="py-32 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.05),transparent_50%)]"></div>
-        
+
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <ScrollReveal animation="fade" delay={200}>
             <div className="text-center mb-24 relative">
               {/* Decorative Elements */}
               <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 w-40 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-30" />
-              
+
               <div className="relative inline-block mb-8">
                 <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 shadow-lg border border-blue-200/50 relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-50/80 via-purple-50/80 to-pink-50/80 opacity-0 hover:opacity-100 transition-opacity duration-300" />
@@ -214,7 +213,7 @@ const Products = () => {
                     <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 transform scale-x-0 origin-left transition-transform duration-700 delay-500 group-hover:scale-x-100" />
                   </span>
                 </h2>
-                
+
                 {/* Floating Numbers */}
                 <div className="absolute -top-8 -left-8 text-8xl font-bold text-blue-500/5 select-none animate-float">01</div>
                 <div className="absolute -top-4 -right-12 text-6xl font-bold text-purple-500/5 select-none animate-float" style={{ animationDelay: '1s' }}>05</div>
@@ -226,7 +225,7 @@ const Products = () => {
                   <span className="text-gradient font-semibold">transform your business operations</span>{" "}
                   and drive unprecedented growth across all industries
                 </p>
-                
+
                 {/* Statistics Row */}
                 <div className="flex justify-center items-center space-x-8 mt-8">
                   <div className="text-center group cursor-pointer">
@@ -263,16 +262,16 @@ const Products = () => {
                       {/* Folder Tab Design */}
                       <div className={`relative bg-gradient-to-r ${product.gradient} rounded-t-2xl h-12 flex items-center px-6`}>
                         <div className="absolute -bottom-0 left-0 right-0 h-3 bg-gradient-to-b from-black/10 to-transparent"></div>
-                        
+
                         {/* Tab Content */}
                         <div className="flex items-center space-x-3 relative z-10">
                           <div className="w-6 h-6 bg-white/30 rounded-md flex items-center justify-center">
                             <div className="w-3 h-3 bg-white/70 rounded-sm"></div>
                           </div>
                           <span className="text-white font-bold text-sm tracking-wider">{product.name.toUpperCase()}</span>
-                        </div>           
+                        </div>
                       </div>
-                      
+
                       {/* Folder Body */}
                       <div className="bg-white border-t-4 border-gray-100 p-6">
                         {/* File Header */}
@@ -291,7 +290,7 @@ const Products = () => {
                               </div>
                             </div>
                           </div>
-                          
+
                           {/* File Actions */}
                           <div className="flex items-center space-x-2">
                             <button className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center justify-center transition-colors duration-200">
@@ -317,11 +316,11 @@ const Products = () => {
                             </div>
                             <span className="font-semibold text-gray-700 text-sm">Features Directory</span>
                           </div>
-                          
+
                           <ul className="space-y-2 ml-7">
                             {product.features.map((feature, idx) => (
-                              <li 
-                                key={idx} 
+                              <li
+                                key={idx}
                                 className="group/file flex items-start space-x-3 p-2 rounded-lg hover:bg-blue-50 transition-all duration-200"
                                 style={{ animationDelay: `${idx * 100}ms` }}
                               >
@@ -330,12 +329,12 @@ const Products = () => {
                                   <div className="w-4 h-4 bg-blue-100 rounded flex items-center justify-center group-hover/file:bg-blue-200 transition-colors duration-200">
                                     <div className="text-xs">📋</div>
                                   </div>
-                                  
+
                                   {/* File Name */}
                                   <span className="text-sm text-gray-600 group-hover/file:text-blue-700 font-medium transition-colors duration-200 truncate">
                                     {feature.toLowerCase().replace(/\s+/g, '_')}.config
                                   </span>
-                                  
+
                                   {/* File Status */}
                                   <div className="flex items-center space-x-1">
                                     <div className="w-1.5 h-1.5 bg-green-500 rounded-full opacity-0 group-hover/file:opacity-100 transition-opacity duration-200"></div>
@@ -361,16 +360,16 @@ const Products = () => {
                               {product.features.length} files • Last modified: 2 hours ago
                             </div>
                           </div>
-                          
+
                           <button className="group/btn relative w-full py-3 bg-gradient-to-r from-gray-800 to-gray-900 text-white font-semibold text-sm rounded-lg overflow-hidden hover:scale-[1.02] transition-all duration-300 shadow-lg">
                             {/* Terminal Style Button */}
                             <div className={`absolute inset-0 bg-gradient-to-r ${product.gradient} opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500`} />
-                            
+
                             <span className="relative z-10 flex items-center justify-center font-mono">
                               <span className="mr-2">$ ./deploy_solution.sh</span>
                               <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
                             </span>
-                            
+
                             {/* Terminal Cursor */}
                             <div className="absolute right-4 top-1/2 transform -translate-y-1/2 w-1 h-4 bg-green-400 opacity-0 group-hover/btn:opacity-100 group-hover/btn:animate-pulse transition-opacity duration-300"></div>
                           </button>
@@ -380,7 +379,7 @@ const Products = () => {
 
                     {/* Folder Shadow */}
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/5 pointer-events-none rounded-2xl"></div>
-                    
+
                     {/* Hover Glow Effect */}
                     <div className={`absolute -inset-1 bg-gradient-to-r ${product.gradient} rounded-2xl blur-sm opacity-0 group-hover:opacity-30 transition-opacity duration-500 -z-10`} />
                   </div>
@@ -395,7 +394,7 @@ const Products = () => {
               {/* Background Effects */}
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_80%,rgba(59,130,246,0.2),transparent_70%)]" />
               <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl -translate-y-32 translate-x-32" />
-              
+
               <div className="relative z-10">
                 <div className="text-center mb-12">
                   <h3 className="text-4xl font-bold mb-4">
@@ -463,7 +462,7 @@ const Products = () => {
       {/* Why Choose Us Section */}
       <section className="py-32 bg-gradient-to-b from-white to-blue-50 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(59,130,246,0.08),transparent_50%)]"></div>
-        
+
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <ScrollReveal animation="slide-up" delay={200}>
             <div className="text-center mb-20">
@@ -475,7 +474,7 @@ const Products = () => {
                 Built for <span className="text-gradient">Excellence</span>
               </h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Every product in our suite is crafted with precision, backed by cutting-edge technology, 
+                Every product in our suite is crafted with precision, backed by cutting-edge technology,
                 and designed to deliver measurable business impact from day one.
               </p>
             </div>
@@ -517,7 +516,7 @@ const Products = () => {
                     <h3 className="text-2xl font-bold text-foreground mb-4 text-center group-hover:text-blue-600 transition-colors duration-300">
                       {item.title}
                     </h3>
-                    
+
                     <p className="text-muted-foreground text-center mb-8 leading-relaxed">
                       {item.description}
                     </p>
@@ -583,39 +582,39 @@ const Products = () => {
                 Agile <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Excellence</span>
               </h2>
               <p className="text-xl text-white/80 leading-relaxed max-w-4xl mx-auto">
-                We leverage cutting-edge Agile methodologies with AI-enhanced workflows, ensuring 
+                We leverage cutting-edge Agile methodologies with AI-enhanced workflows, ensuring
                 rapid delivery, exceptional quality, and seamless adaptation to your evolving needs.
               </p>
             </div>
           </ScrollReveal>
-          
+
           {/* Enhanced Process Steps */}
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-20">
             {[
-              { 
-                step: "01", 
-                title: "Discovery & Strategy", 
+              {
+                step: "01",
+                title: "Discovery & Strategy",
                 desc: "Deep-dive analysis, market research, and strategic planning",
                 icon: Globe,
                 color: "from-blue-400 to-cyan-400"
               },
-              { 
-                step: "02", 
-                title: "Design & Architecture", 
+              {
+                step: "02",
+                title: "Design & Architecture",
                 desc: "User-centric design with scalable system architecture",
                 icon: Zap,
                 color: "from-purple-400 to-pink-400"
               },
-              { 
-                step: "03", 
-                title: "Development & Testing", 
+              {
+                step: "03",
+                title: "Development & Testing",
                 desc: "Agile sprints with continuous integration and testing",
                 icon: Shield,
                 color: "from-green-400 to-teal-400"
               },
-              { 
-                step: "04", 
-                title: "Deploy & Scale", 
+              {
+                step: "04",
+                title: "Deploy & Scale",
                 desc: "Seamless deployment with ongoing optimization",
                 icon: TrendingUp,
                 color: "from-orange-400 to-red-400"
@@ -629,7 +628,7 @@ const Products = () => {
                     {index < 3 && (
                       <div className="hidden lg:block absolute top-20 left-full w-full h-0.5 bg-gradient-to-r from-white/30 to-transparent z-0" />
                     )}
-                    
+
                     {/* Step Card */}
                     <div className="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 hover:bg-white/15 transition-all duration-500 group-hover:scale-105">
                       {/* Step Number */}
@@ -689,12 +688,12 @@ const Products = () => {
           </ScrollReveal>
         </div>
       </section>
- 
+
       {/* Tech Stack with Animation */}
       <ScrollReveal animation="fade">
         <TechStack />
       </ScrollReveal>
-      
+
       {/* Enhanced CTA Section */}
       <section className="py-32 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 relative overflow-hidden">
         {/* Animated Background */}
@@ -728,9 +727,9 @@ const Products = () => {
                   Business Today
                 </span>
               </h2>
-              
+
               <p className="text-xl sm:text-2xl text-white/80 mb-12 max-w-3xl mx-auto leading-relaxed">
-                Join 50+ successful businesses that have revolutionized their operations 
+                Join 50+ successful businesses that have revolutionized their operations
                 with our cutting-edge solutions. Your transformation starts here.
               </p>
 
